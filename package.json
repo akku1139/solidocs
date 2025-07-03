@@ -1,12 +1,10 @@
 {
-  "name": "solidocs",
-  "version": "0.0.0",
-  "type": "module",
-  "description": "",
-  "scripts": {
-  },
-  "keywords": ["solidjs", "rolldown", "solidocs"],
-  "author": "akku",
+  "name": "solidocs-monorepo",
   "license": "MIT",
-  "packageManager": "pnpm@10.12.4"
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "turbo": "^2.5.4"
+  }
 }

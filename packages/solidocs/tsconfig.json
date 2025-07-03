@@ -1,0 +1,7 @@
+{
+  "extends": "@solidocs-dev/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "outDir": "dist",
+  }
+}

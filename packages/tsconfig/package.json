@@ -1,0 +1,10 @@
+{
+  "name": "@solidocs-dev/tsconfig",
+  "version": "0.0.0",
+  "description": "tsconfig base",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^24.0.10",
+    "typescript": "^5.8.3"
+  }
+}
