@@ -1,0 +1,12 @@
+{
+  "name": "solidocs",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "",
+  "scripts": {
+  },
+  "keywords": ["solidjs", "rolldown", "solidocs"],
+  "author": "akku",
+  "license": "MIT",
+  "packageManager": "pnpm@10.12.4"
+}
