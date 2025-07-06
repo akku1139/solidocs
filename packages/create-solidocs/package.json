@@ -2,6 +2,7 @@
   "name": "create-solidocs",
   "version": "0.0.0",
   "description": "",
+  "type": "module",
   "keywords": [],
   "author": "akku",
   "license": "MIT"

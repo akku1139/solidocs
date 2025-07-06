@@ -20,8 +20,8 @@ export const routingPlugin = (options: { config: ParsedConfig, routes: Routes })
         code: `
           import { lazy } from "solid-js"
           export default [ ${options.routes.map(route => `{
-            path: ${JSON.stringify((route[0].replace(/\/?index$/, "/") + "/" ).replaceAll(/\/+/g, "/"))},
-            component: lazy(() => import("${p(route[1])}")),
+            path: ${JSON.stringify(route[0])},
+            component: lazy(() => import(${JSON.stringify(p(route[1]))})),
             }`)
           } ]
         `
@@ -32,10 +32,10 @@ export const routingPlugin = (options: { config: ParsedConfig, routes: Routes })
 })
 
 export const getRoutes = async (): Promise<Routes> => {
-  const srcs = await Array.fromAsync(fs.glob(`./**/*.md`))
+  const srcs = await Array.fromAsync(fs.glob("./**/*.md", { exclude: ["./node_modules"] }))
   return srcs.map(src => {
     return [
-      src.replace(/\.md$/, ""),
+      (src.replace(/\.md$/, "").replace(/\/?index$/, "/") + "/" ).replaceAll(/\/+/g, "/"),
       src,
     ]
   })

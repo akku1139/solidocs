@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@solidjs/router':
+    hash: 87026fa4d3c0bef0ee3d5f8f5b2aa7fcb842b6a440ee2af87a7e08973096b278
+    path: patches/@solidjs__router.patch
+
 importers:
 
   .:
@@ -14,6 +19,12 @@ importers:
 
   docs:
     dependencies:
+      '@solidjs/router':
+        specifier: ^0.15.3
+        version: 0.15.3(patch_hash=87026fa4d3c0bef0ee3d5f8f5b2aa7fcb842b6a440ee2af87a7e08973096b278)(solid-js@1.9.7)
+      solid-js:
+        specifier: ^1.9.7
+        version: 1.9.7
       solidocs:
         specifier: workspace:*
         version: link:../packages/solidocs
@@ -31,7 +42,7 @@ importers:
         version: 3.1.0(acorn@8.15.0)(rollup@4.44.2)
       '@solidjs/router':
         specifier: ^0.15.3
-        version: 0.15.3(solid-js@1.9.7)
+        version: 0.15.3(patch_hash=87026fa4d3c0bef0ee3d5f8f5b2aa7fcb842b6a440ee2af87a7e08973096b278)(solid-js@1.9.7)
       rolldown:
         specifier: 1.0.0-beta.23
         version: 1.0.0-beta.23
@@ -1542,7 +1553,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.44.2':
     optional: true
 
-  '@solidjs/router@0.15.3(solid-js@1.9.7)':
+  '@solidjs/router@0.15.3(patch_hash=87026fa4d3c0bef0ee3d5f8f5b2aa7fcb842b6a440ee2af87a7e08973096b278)(solid-js@1.9.7)':
     dependencies:
       solid-js: 1.9.7
 
