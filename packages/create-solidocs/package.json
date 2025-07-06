@@ -1,0 +1,9 @@
+{
+  "name": "create-solidocs",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "akku",
+  "license": "MIT",
+  "packageManager": "pnpm@10.12.4"
+}
