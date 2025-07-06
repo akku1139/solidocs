@@ -5,16 +5,16 @@ import { getRoutes } from "../rolldown-plugins/routing.ts"
 import { baseRolldownPlugns } from "../utils/rolldown.ts"
 import { p } from "../utils/path.ts"
 import * as path from "node:path"
-import { renderToStringAsync } from "solid-js/web"
-import type { App } from "../../shared/types.ts"
+// import type { App } from "../../shared/types.ts"
 import * as process from "node:process"
+// import type { render } from "../../client/entry/ssr.tsx"
 
 export const argsSchema: ParseArgsOptionsConfig = {
 }
 
 export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
   process.env.NODE_ENV = "production"
-  const cwd = process.cwd()
+  // const cwd = process.cwd()
 
   console.log("building app...")
 
@@ -29,6 +29,7 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
       format: "esm",
     },
     platform: "browser",
+    treeshake: true,
     plugins: baseRolldownPlugns({
       config, routes,
       solidOptions: {
@@ -41,20 +42,22 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
   })
 
   console.log("buid for prerendering")
-  const appFile = p("node_modules/.solidocs/ssr-build.js")
+  const ssrEntryFile = p("node_modules/.solidocs/ssr-build.js")
   await rolldownBuild({
-    input: path.resolve(import.meta.dirname, "../../client/App.tsx"),
+    input: path.resolve(import.meta.dirname, "../../client/entry/ssr.tsx"),
     output: {
-      file: appFile,
+      file: ssrEntryFile,
       format: "esm",
       inlineDynamicImports: true,
     },
     platform: "node",
+    treeshake: true,
+    /// FIXME: bug.
     // external: id => {
     //   if(id.startsWith("solidocs:")) return false
     //   if(id === "solid-js" || id === "@solidjs/router") return false
     //   if(id.endsWith(".jsx") || id.endsWith(".tsx")) return false
-    //   if(id.startsWith(cwd+"/node_modules/") || !id.startsWith("/")) return true
+    //   // if(id.startsWith(cwd+"/node_modules/") || !id.startsWith("/")) return true
     //   return false
     // },
     plugins: baseRolldownPlugns({
@@ -70,13 +73,12 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
 
   console.log("prerendering...")
 
-  const app = (await import(appFile)).app as App
+  //const render = (await import(ssrEntryFile)).render as typeof render
+  const render = (await import(ssrEntryFile)).render
 
   await Promise.all(routes.map(async route => {
     console.log("path:", route[0])
-    await renderToStringAsync(app({
-      url: route[0],
-    }))
+    await render(route[0])
   }))
 
   console.log("done.")

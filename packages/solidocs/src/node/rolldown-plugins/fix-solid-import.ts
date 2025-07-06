@@ -3,7 +3,7 @@ import type { Plugin } from "rolldown"
 // https://github.com/solidjs/vite-plugin-solid/blob/4fd7a5dea1a49cea4426ff22d11cc74ccf6cedd9/src/index.ts#L266
 // not working?
 // Solve it with pnpm patch temporarily.
-export const fixSolidPlugin: Plugin = {
+export const fixSolidImportPlugin: Plugin = {
   name: "solidocs-fixsolid",
   options(opts) {
     if(!opts.resolve) opts.resolve = {}
