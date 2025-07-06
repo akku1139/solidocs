@@ -12,16 +12,32 @@ importers:
         specifier: ^2.5.4
         version: 2.5.4
 
-  docs: {}
+  docs:
+    dependencies:
+      solidocs:
+        specifier: workspace:*
+        version: link:../packages/solidocs
+    devDependencies:
+      '@solidocs-dev/tsconfig':
+        specifier: workspace:*
+        version: link:../packages/tsconfig
+
+  packages/create-solidocs: {}
 
   packages/solidocs:
     dependencies:
+      '@solidjs/router':
+        specifier: ^0.15.3
+        version: 0.15.3(solid-js@1.9.7)
       rolldown:
         specifier: 1.0.0-beta.23
         version: 1.0.0-beta.23
       solid-js:
         specifier: ^1.9.7
         version: 1.9.7
+      valibot:
+        specifier: ^1.1.0
+        version: 1.1.0(typescript@5.8.3)
     devDependencies:
       '@solidocs-dev/tsconfig':
         specifier: workspace:*
@@ -126,6 +142,11 @@ packages:
   '@rolldown/pluginutils@1.0.0-beta.23':
     resolution: {integrity: sha512-lLCP4LUecUGBLq8EfkbY2esGYyvZj5ee+WZG12+mVnQH48b46SVbwp+0vJkD+6Pnsc+u9SWarBV9sQ5mVwmb5g==}
 
+  '@solidjs/router@0.15.3':
+    resolution: {integrity: sha512-iEbW8UKok2Oio7o6Y4VTzLj+KFCmQPGEpm1fS3xixwFBdclFVBvaQVeibl1jys4cujfAK5Kn6+uG2uBm3lxOMw==}
+    peerDependencies:
+      solid-js: ^1.8.6
+
   '@tybys/wasm-util@0.9.0':
     resolution: {integrity: sha512-6+7nlbMVX/PVDCwaIQ8nTOPveOcFLSt8GcXdx8hD0bt39uWxYT88uXzqTd4fTvqta7oeUJqudepapKNt2DYJFw==}
 
@@ -201,6 +222,14 @@ packages:
   undici-types@7.8.0:
     resolution: {integrity: sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw==}
 
+  valibot@1.1.0:
+    resolution: {integrity: sha512-Nk8lX30Qhu+9txPYTwM0cFlWLdPFsFr6LblzqIySfbZph9+BFsAHsNvHOymEviUepeIW6KFHzpX8TKhbptBXXw==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
 snapshots:
 
   '@emnapi/core@1.4.3':
@@ -269,6 +298,10 @@ snapshots:
     optional: true
 
   '@rolldown/pluginutils@1.0.0-beta.23': {}
+
+  '@solidjs/router@0.15.3(solid-js@1.9.7)':
+    dependencies:
+      solid-js: 1.9.7
 
   '@tybys/wasm-util@0.9.0':
     dependencies:
@@ -348,3 +381,7 @@ snapshots:
   typescript@5.8.3: {}
 
   undici-types@7.8.0: {}
+
+  valibot@1.1.0(typescript@5.8.3):
+    optionalDependencies:
+      typescript: 5.8.3

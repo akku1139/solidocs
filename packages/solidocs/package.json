@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "type": "module",
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "check": "tsc --noEmit"
+  },
   "keywords": [
     "solidjs",
     "rolldown",
@@ -11,10 +13,17 @@
   ],
   "author": "akku",
   "license": "MIT",
-  "packageManager": "pnpm@10.12.4",
+  "bin": "./bin/solidocs.ts",
+  "exports": {
+    ".": {
+      "import": "./src/node/index.ts"
+    }
+  },
   "dependencies": {
+    "@solidjs/router": "^0.15.3",
     "rolldown": "1.0.0-beta.23",
-    "solid-js": "^1.9.7"
+    "solid-js": "^1.9.7",
+    "valibot": "^1.1.0"
   },
   "devDependencies": {
     "@solidocs-dev/tsconfig": "workspace:*",

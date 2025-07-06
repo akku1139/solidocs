@@ -4,6 +4,8 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
 
+    "noEmit": true, // --experimental-strip-types
+
     // Module
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": false,
@@ -20,7 +22,7 @@
     "declaration": true,
     //"noEmitOnError": true,
 
-    //"allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": true,
     // https://zenn.dev/uhyo/articles/rewrite-relative-import-extensions-read-before-use
     //"rewriteRelativeImportExtensions": true,
 

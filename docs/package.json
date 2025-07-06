@@ -2,5 +2,14 @@
   "name": "@solidocs-dev/docs",
   "version": "0.0.0",
   "description": "docs",
-  "private": true
+  "private": true,
+  "scripts": {
+    "docs:build": "solidocs build"
+  },
+  "dependencies": {
+    "solidocs": "workspace:*"
+  },
+  "devDependencies": {
+    "@solidocs-dev/tsconfig": "workspace:*"
+  }
 }
