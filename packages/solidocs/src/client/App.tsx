@@ -1,5 +1,5 @@
 import { Router } from "@solidjs/router"
-import { HydrationScript, NoHydration, isServer } from "solid-js/web"
+import { HydrationScript, NoHydration, isServer, Suspense } from "solid-js/web"
 import routes from "solidocs:routes"
 import type { App } from "../shared/types.ts"
 
@@ -13,10 +13,12 @@ return <html>
   </head>
   <body>
     <div id="root">
-      <Router url={isServer ? props?.url : void 0} >{ // base={props?.base} url={isServer ? props?.url : ""}
-        // routesSignal() // Uncaught TypeError: Comp is not a function
-        routes
-      }</Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Router url={isServer ? props?.url : void 0} >{ // base={props?.base} url={isServer ? props?.url : ""}
+          // routesSignal() // Uncaught TypeError: Comp is not a function
+          routes
+        }</Router>
+      </Suspense>
     </div>
     <NoHydration>
       <script src={props?.entry} type="module" defer />
