@@ -1,7 +1,6 @@
 import { renderToStringAsync } from "solid-js/web"
-import { app as APP } from "../App.tsx"
+import { Main } from "../App.tsx"
 
-export const render = (url: string) => renderToStringAsync(
-  <APP url={url} />,
+export const render = (url: string, clientEntryPath: string) => renderToStringAsync(
+  () => <Main url={url} entry={clientEntryPath} />,
 )
-

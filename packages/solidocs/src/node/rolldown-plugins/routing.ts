@@ -22,6 +22,7 @@ export const routingPlugin = (options: { config: ParsedConfig, routes: Routes })
           export default [ ${options.routes.map(route => `{
             path: ${JSON.stringify(route[0])},
             component: lazy(() => import(${JSON.stringify(p(route[1]))})),
+            // component: (await import(${JSON.stringify(p(route[1]))})).default, // works
             }`)
           } ]
         `

@@ -5,9 +5,9 @@ import { getRoutes } from "../rolldown-plugins/routing.ts"
 import { baseRolldownPlugns } from "../utils/rolldown.ts"
 import { p } from "../utils/path.ts"
 import * as path from "node:path"
-// import type { App } from "../../shared/types.ts"
+import type { AppRender } from "../../shared/types.ts"
 import * as process from "node:process"
-// import type { render } from "../../client/entry/ssr.tsx"
+import * as fs from "node:fs/promises"
 
 export const argsSchema: ParseArgsOptionsConfig = {
 }
@@ -16,16 +16,20 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
   process.env.NODE_ENV = "production"
   // const cwd = process.cwd()
 
+  const distDir = p(".solidocs/dist")
+  await fs.rm(distDir, { recursive: true, force: true })
+  await fs.mkdir(distDir, { recursive: true })
+
   console.log("building app...")
 
   const routes = await getRoutes()
   // console.log("routes", routes)
 
   console.log("build for client")
-  await rolldownBuild({
-    input: path.resolve(import.meta.dirname, "../../client/App.tsx"),
+  const clientBuildResult = await rolldownBuild({
+    input: path.resolve(import.meta.dirname, "../../client/entry/client.tsx"),
     output: {
-      dir: p("node_modules/.solidocs/client/"), // TODO: fix
+      dir: p(distDir + "/_assets/js"),
       format: "esm",
     },
     platform: "browser",
@@ -53,13 +57,14 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
     platform: "node",
     treeshake: true,
     /// FIXME: bug.
-    // external: id => {
-    //   if(id.startsWith("solidocs:")) return false
-    //   if(id === "solid-js" || id === "@solidjs/router") return false
-    //   if(id.endsWith(".jsx") || id.endsWith(".tsx")) return false
-    //   // if(id.startsWith(cwd+"/node_modules/") || !id.startsWith("/")) return true
-    //   return false
-    // },
+    external: id => {
+      if(id.startsWith("solidocs:")) return false
+      if(id === "solid-js" || id === "solid-js/web") return true
+      // if(id === "@solidjs/router") return false
+      if(id.endsWith(".jsx") || id.endsWith(".tsx")) return false
+      // if(id.startsWith(cwd+"/node_modules/") || !id.startsWith("/")) return true
+      return false
+    },
     plugins: baseRolldownPlugns({
       config, routes,
       solidOptions: {
@@ -74,11 +79,12 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
   console.log("prerendering...")
 
   //const render = (await import(ssrEntryFile)).render as typeof render
-  const render = (await import(ssrEntryFile)).render
+  const render = (await import(ssrEntryFile)).render as AppRender
 
   await Promise.all(routes.map(async route => {
     console.log("path:", route[0])
-    await render(route[0])
+    const content = "<!DOCTYPE html>"+await render(route[0], "/_assets/js/" + clientBuildResult.output[0].fileName) // TODO: basepath support
+    await fs.writeFile(path.resolve(distDir, route[1].replace(/.md$/, ".html")), content)
   }))
 
   console.log("done.")
