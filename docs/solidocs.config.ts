@@ -1,5 +1,6 @@
 import { defineConfig } from "solidocs"
 
 export default defineConfig({
-  title: "Solidocs"
+  title: "Solidocs",
+  basePath: "/solidocs/"
 })

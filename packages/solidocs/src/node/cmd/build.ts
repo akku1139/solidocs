@@ -83,7 +83,7 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
 
   await Promise.all(routes.map(async route => {
     console.log("path:", route[0])
-    const content = "<!DOCTYPE html>"+await render(route[0], "/_assets/js/" + clientBuildResult.output[0].fileName) // TODO: basepath support
+    const content = "<!DOCTYPE html>"+await render(route[0], "/_assets/js/" + clientBuildResult.output[0].fileName, config.basePath)
     await fs.writeFile(path.resolve(distDir, route[1].replace(/.md$/, ".html")), content)
   }))
 

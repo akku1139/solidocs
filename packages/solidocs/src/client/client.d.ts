@@ -6,3 +6,8 @@ declare module "solidocs:routes" {
   }> = []
   export default routes
 }
+
+declare module "solidocs:basepath" {
+  let basepath: string
+  export default basepath
+}

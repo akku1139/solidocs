@@ -11,7 +11,7 @@ export const ConfigSchema = v.object({
   //   v.pipe(v.string(), v.endsWith("/")),
   //   v.pipe(v.string(), v.url()),
   // ]))
-  // basePath: v.optional(v.string(), "/"),
+  basePath: v.optional(v.string(), "/"), // TODO: support relative base path
 })
 
 export type UserConfig = v.InferInput<typeof ConfigSchema>

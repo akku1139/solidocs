@@ -5,6 +5,7 @@ import {default as solidPlugin, type Options as SolidOptions} from "vite-plugin-
 import { routingPlugin, type Routes } from "../rolldown-plugins/routing.ts"
 import { fixSolidImportPlugin } from "../rolldown-plugins/fix-solid-import.ts"
 import { mdxDomExpressionsPlugin } from "../rolldown-plugins/mdx-dom-expressions.ts"
+import { basePathPlugin } from "../rolldown-plugins/basepath.ts"
 
 // TODO: use filter https://rolldown.rs/guide/plugin-development
 export const baseRolldownPlugns = (options: {
@@ -16,6 +17,7 @@ export const baseRolldownPlugns = (options: {
 }): RolldownBuildOptions["plugins"] => {
   return [
     routingPlugin({ config: options.config, routes: options.routes }),
+    basePathPlugin(options.config),
     mdx({
       jsx: true,
       jsxImportSource: "solid-js",
