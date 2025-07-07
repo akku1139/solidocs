@@ -3,3 +3,5 @@
 # remove vite-plugin-solid
 
 This installs vite. (Unwanted dependency)
+
+# Configure trailing slash
