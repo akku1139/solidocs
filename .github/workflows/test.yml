@@ -1,0 +1,37 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install -g corepack@latest && corepack enable pnpm
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm run check
+
+  # test:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       type: [basic]
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - run: npm install -g corepack@latest && corepack enable pnpm
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 23.x
+  #         cache: pnpm
+  #     - run: pnpm install
+  #     - run: pnpm run test:${{ matrix.type }}
+  #     - run: pnpm run test:${{ matrix.type }} --trace-warnings
+  #       if: ${{ failure() }}

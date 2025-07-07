@@ -1,0 +1,21 @@
+name: Audit
+
+on:
+  schedule:
+    - cron: 43 6 * * THU
+
+jobs:
+  pnpm-audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: npm install -g corepack@latest && corepack enable pnpm
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      - run: pnpm audit
