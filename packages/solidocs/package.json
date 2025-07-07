@@ -20,8 +20,10 @@
     }
   },
   "dependencies": {
+    "@hono/node-server": "^1.15.0",
     "@mdx-js/rollup": "^3.1.0",
     "@solidjs/router": "^0.15.3",
+    "hono": "^4.8.4",
     "rolldown": "1.0.0-beta.23",
     "solid-js": "^1.9.7",
     "valibot": "^1.1.0",

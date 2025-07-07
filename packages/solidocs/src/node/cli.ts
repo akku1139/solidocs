@@ -7,6 +7,7 @@ import * as process from "node:process"
 
 import type { CMD } from "./types.ts"
 import * as build from "./cmd/build.ts"
+import * as dev from "./cmd/dev.ts"
 
 // TODO: Support TS config
 const configFilePath = p("solidocs.config.ts")
@@ -16,6 +17,7 @@ const config = v.parse(ConfigSchema,
 
 const commands: Record<string, { cmd: CMD<any>, argsSchema: ParseArgsOptionsConfig }> = {
   build,
+  dev,
 }
 
 const command = commands[process.argv[2] ?? ""]
@@ -23,5 +25,5 @@ const command = commands[process.argv[2] ?? ""]
 if(command) {
   await command.cmd(config, parseArgs({ args: process.argv.splice(3), options: command.argsSchema }))
 } else {
-  // await devServer(config, process.argv.slice(2))
+  await commands.dev!.cmd(config, parseArgs({ args: process.argv.splice(2), options: commands.dev?.argsSchema }))
 }

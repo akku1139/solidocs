@@ -5,6 +5,7 @@ export type App = Component<Partial<{
   url: string
   base: string
   entry: string
+  noHydrarte: boolean
 }>>
 
 export type AppRender = typeof render
