@@ -5,7 +5,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "docs:build": "solidocs build"
+    "docs:build": "solidocs build",
+    "docs:dev": "solidocs dev"
   },
   "dependencies": {
     "@solidjs/router": "^0.15.3",

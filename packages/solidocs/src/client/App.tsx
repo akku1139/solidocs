@@ -1,14 +1,6 @@
-import { Router } from "@solidjs/router"
-import { HydrationScript, NoHydration, isServer, Suspense } from "solid-js/web"
-import routes from "solidocs:routes"
+import { HydrationScript, NoHydration } from "solid-js/web"
 import type { App } from "../shared/types.ts"
-
-export const Core: App = (props) => <Suspense fallback={<div>Loading...</div>}>
-  <Router base={props.base} url={isServer ? props.url : void 0} >{
-    // routesSignal() // Uncaught TypeError: Comp is not a function
-      routes
-      }</Router>
-  </Suspense>
+import { Core } from "./Core.tsx"
 
 export const Main: App = (props) => {
 return <html>

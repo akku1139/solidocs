@@ -1,4 +1,4 @@
-import { Core } from "../App.tsx"
+import { Core } from "../Core.tsx"
 import { render } from "solid-js/web"
 import basepath from "solidocs:basepath"
 
