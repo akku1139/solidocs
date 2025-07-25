@@ -1,9 +1,11 @@
 {
   "$schema": "./node_modules/turbo/schema.json",
   "tasks": {
-    //"docs:build": {}
     "check": {
-      "dependsOn": ["^check"]
-    }
+      "dependsOn": ["^check", "check:shared", "check:client", "check:node"]
+    },
+    "check:shared": {},
+    "check:client": {},
+    "check:node": {}
   }
 }

@@ -4,7 +4,10 @@
   "type": "module",
   "description": "",
   "scripts": {
-    "check": "tsc --noEmit"
+    "check": "echo done",
+    "check:shared": "cd src/shared && tsc --noEmit",
+    "check:client": "cd src/client && tsc --noEmit",
+    "check:node": "cd src/node && tsc --noEmit"
   },
   "keywords": [
     "solidjs",

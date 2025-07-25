@@ -2,7 +2,11 @@
 
 # remove vite-plugin-solid
 
-This installs vite. (Unwanted dependency)
+It installs vite. (Unwanted dependency)
+
+- `babel-preset-solid`
+- `solid-refresh`
+- `@rollup/plugin-babel`
 
 # Configure trailing slash
 
