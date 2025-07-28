@@ -39,7 +39,7 @@ importers:
     dependencies:
       '@hono/node-server':
         specifier: ^1.17.1
-        version: 1.17.1(hono@4.8.7)
+        version: 1.17.1(hono@4.8.9)
       '@mdx-js/rollup':
         specifier: ^3.1.0
         version: 3.1.0(acorn@8.15.0)(rollup@4.44.2)
@@ -47,8 +47,8 @@ importers:
         specifier: ^0.15.3
         version: 0.15.3(patch_hash=87026fa4d3c0bef0ee3d5f8f5b2aa7fcb842b6a440ee2af87a7e08973096b278)(solid-js@1.9.7)
       hono:
-        specifier: ^4.8.7
-        version: 4.8.7
+        specifier: ^4.8.9
+        version: 4.8.9
       rolldown:
         specifier: 1.0.0-beta.27
         version: 1.0.0-beta.27
@@ -765,8 +765,8 @@ packages:
   hast-util-whitespace@3.0.0:
     resolution: {integrity: sha512-88JUN06ipLwsnv+dVn+OIYOvAuvBMy/Qoi6O7mQHxdPXpjy+Cd6xRkWwux7DKO+4sYILtLBRIKgsdpS2gQc7qw==}
 
-  hono@4.8.7:
-    resolution: {integrity: sha512-gS/IyUw6MzcdnOyVRcRshn9hc/EygYc75glsnI3iESod3kGg9Mz194Y9NWJN8O/4qybIoonyIq6E4agc/t0i/g==}
+  hono@4.8.9:
+    resolution: {integrity: sha512-ERIxkXMRhUxGV7nS/Af52+j2KL60B1eg+k6cPtgzrGughS+espS9KQ7QO0SMnevtmRlBfAcN0mf1jKtO6j/doA==}
     engines: {node: '>=16.9.0'}
 
   html-entities@2.3.3:
@@ -1418,9 +1418,9 @@ snapshots:
   '@esbuild/win32-x64@0.25.8':
     optional: true
 
-  '@hono/node-server@1.17.1(hono@4.8.7)':
+  '@hono/node-server@1.17.1(hono@4.8.9)':
     dependencies:
-      hono: 4.8.7
+      hono: 4.8.9
 
   '@jridgewell/gen-mapping@0.3.12':
     dependencies:
@@ -1872,7 +1872,7 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.4
 
-  hono@4.8.7: {}
+  hono@4.8.9: {}
 
   html-entities@2.3.3: {}
 
