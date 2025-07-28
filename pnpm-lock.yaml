@@ -60,14 +60,14 @@ importers:
         version: 1.1.0(typescript@5.8.3)
       vite-plugin-solid:
         specifier: ^2.11.7
-        version: 2.11.7(solid-js@1.9.7)(vite@6.3.5(@types/node@24.0.13))
+        version: 2.11.7(solid-js@1.9.7)(vite@6.3.5(@types/node@24.1.0))
     devDependencies:
       '@solidocs-dev/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':
-        specifier: ^24.0.13
-        version: 24.0.13
+        specifier: ^24.1.0
+        version: 24.1.0
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -75,8 +75,8 @@ importers:
   packages/tsconfig:
     devDependencies:
       '@types/node':
-        specifier: ^24.0.13
-        version: 24.0.13
+        specifier: ^24.1.0
+        version: 24.1.0
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -593,8 +593,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@24.0.13':
-    resolution: {integrity: sha512-Qm9OYVOFHFYg3wJoTSrz80hoec5Lia/dPp84do3X7dZvLikQvM1YpmvTBEdIr/e+U8HTkFjLHLnl78K/qjf+jQ==}
+  '@types/node@24.1.0':
+    resolution: {integrity: sha512-ut5FthK5moxFKH2T1CUOC6ctR67rQRvvHdFLCD2Ql6KXmMuCrjsSsRI9UsLCm9M18BMwClv4pn327UvB7eeO1w==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -1654,7 +1654,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@24.0.13':
+  '@types/node@24.1.0':
     dependencies:
       undici-types: 7.8.0
 
@@ -2504,7 +2504,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite-plugin-solid@2.11.7(solid-js@1.9.7)(vite@6.3.5(@types/node@24.0.13)):
+  vite-plugin-solid@2.11.7(solid-js@1.9.7)(vite@6.3.5(@types/node@24.1.0)):
     dependencies:
       '@babel/core': 7.28.0
       '@types/babel__core': 7.20.5
@@ -2512,12 +2512,12 @@ snapshots:
       merge-anything: 5.1.7
       solid-js: 1.9.7
       solid-refresh: 0.6.3(solid-js@1.9.7)
-      vite: 6.3.5(@types/node@24.0.13)
-      vitefu: 1.1.1(vite@6.3.5(@types/node@24.0.13))
+      vite: 6.3.5(@types/node@24.1.0)
+      vitefu: 1.1.1(vite@6.3.5(@types/node@24.1.0))
     transitivePeerDependencies:
       - supports-color
 
-  vite@6.3.5(@types/node@24.0.13):
+  vite@6.3.5(@types/node@24.1.0):
     dependencies:
       esbuild: 0.25.8
       fdir: 6.4.6(picomatch@4.0.3)
@@ -2526,12 +2526,12 @@ snapshots:
       rollup: 4.44.2
       tinyglobby: 0.2.14
     optionalDependencies:
-      '@types/node': 24.0.13
+      '@types/node': 24.1.0
       fsevents: 2.3.3
 
-  vitefu@1.1.1(vite@6.3.5(@types/node@24.0.13)):
+  vitefu@1.1.1(vite@6.3.5(@types/node@24.1.0)):
     optionalDependencies:
-      vite: 6.3.5(@types/node@24.0.13)
+      vite: 6.3.5(@types/node@24.1.0)
 
   yallist@3.1.1: {}
 
