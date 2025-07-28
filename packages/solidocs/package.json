@@ -27,7 +27,7 @@
     "@mdx-js/rollup": "^3.1.0",
     "@solidjs/router": "^0.15.3",
     "hono": "^4.8.7",
-    "rolldown": "1.0.0-beta.27",
+    "rolldown": "1.0.0-beta.29",
     "solid-js": "^1.9.7",
     "valibot": "^1.1.0",
     "vite-plugin-solid": "^2.11.7"
