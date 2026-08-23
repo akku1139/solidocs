@@ -1,0 +1,189 @@
+/* SoliDocs default theme */
+:root {
+  --sd-bg: #ffffff;
+  --sd-bg-soft: #f6f6f7;
+  --sd-border: #e2e2e3;
+  --sd-text: #213547;
+  --sd-text-soft: rgba(42, 48, 60, .65);
+  --sd-brand: #2c8ef8;
+  --sd-brand-strong: #1f76d2;
+  --sd-code-bg: #f6f8fa;
+  --sd-sidebar-w: 250px;
+  --sd-aside-w: 220px;
+  --sd-header-h: 56px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  color: var(--sd-text);
+  background: var(--sd-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--sd-brand); text-decoration: none; }
+a:hover { color: var(--sd-brand-strong); }
+
+code, pre {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .875em;
+}
+
+pre {
+  background: var(--sd-code-bg);
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+
+:not(pre) > code {
+  background: var(--sd-code-bg);
+  border: 1px solid var(--sd-border);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+blockquote {
+  margin: 16px 0;
+  padding: 4px 16px;
+  border-left: 3px solid var(--sd-border);
+  color: var(--sd-text-soft);
+}
+
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid var(--sd-border); padding: 8px 12px; text-align: left; }
+th { background: var(--sd-bg-soft); }
+
+img { max-width: 100%; }
+
+/* Layout */
+.solidocs-shell { min-height: 100vh; display: flex; flex-direction: column; }
+
+.solidocs-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--sd-header-h);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  background: color-mix(in srgb, var(--sd-bg) 85%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--sd-border);
+}
+
+.solidocs-header-brand {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--sd-text);
+}
+
+.solidocs-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  gap: 32px;
+  padding: 24px;
+}
+
+/* Sidebar */
+.solidocs-sidebar {
+  position: sticky;
+  top: calc(var(--sd-header-h) + 24px);
+  height: fit-content;
+  width: var(--sd-sidebar-w);
+  overflow-y: auto;
+  max-height: calc(100vh - var(--sd-header-h) - 48px);
+  font-size: .9rem;
+}
+
+.solidocs-sidebar ul { list-style: none; margin: 0; padding: 0; }
+.solidocs-sidebar li { margin: 2px 0; }
+.solidocs-sidebar a {
+  display: block;
+  padding: 5px 10px;
+  border-left: 2px solid transparent;
+  color: var(--sd-text-soft);
+}
+.solidocs-sidebar a:hover { color: var(--sd-text); }
+.solidocs-sidebar a.is-active {
+  color: var(--sd-brand);
+  border-left-color: var(--sd-brand);
+  font-weight: 600;
+}
+
+/* Content */
+.solidocs-doc { line-height: 1.75; }
+.solidocs-doc h1, .solidocs-doc h2, .solidocs-doc h3 { scroll-margin-top: calc(var(--sd-header-h) + 16px); }
+.solidocs-doc h2 { margin-top: 2.2em; border-bottom: 1px solid var(--sd-border); padding-bottom: .3em; }
+
+/* Aside outline */
+.solidocs-aside {
+  position: sticky;
+  top: calc(var(--sd-header-h) + 24px);
+  width: var(--sd-aside-w);
+  height: fit-content;
+  max-height: calc(100vh - var(--sd-header-h) - 48px);
+  overflow-y: auto;
+  font-size: .85rem;
+}
+
+.solidocs-outline-title {
+  font-weight: 700;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--sd-text-soft);
+  margin: 0 0 10px;
+}
+
+.solidocs-outline ul { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--sd-border); }
+.solidocs-outline li { margin: 0; }
+.solidocs-outline a {
+  display: block;
+  padding: 3px 14px;
+  border-left: 1px solid transparent;
+  color: var(--sd-text-soft);
+  margin-left: -1px;
+}
+.solidocs-outline a:hover { color: var(--sd-text); }
+.solidocs-outline-level-3 a { padding-left: 28px; }
+
+@media (max-width: 1080px) {
+  .solidocs-layout { grid-template-columns: minmax(0, 1fr); }
+  .solidocs-sidebar { display: none; }
+  .solidocs-aside { display: none; }
+}
+
+/* Home layout */
+.solidocs-home {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 72px 24px 48px;
+  text-align: center;
+}
+
+.solidocs-home-title {
+  font-size: 3.2rem;
+  margin: 0 0 12px;
+  background: linear-gradient(120deg, var(--sd-brand), #9b59f5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.solidocs-home-tagline {
+  font-size: 1.25rem;
+  color: var(--sd-text-soft);
+  margin: 0 0 32px;
+}
+
+.solidocs-home .solidocs-doc { text-align: left; max-width: 720px; margin: 0 auto; }

@@ -1,7 +1,7 @@
 import type { CMD } from "../types.ts"
 import type { ParseArgsOptionsConfig } from "node:util"
 import { build as rolldownBuild } from "rolldown"
-import { getRoutes } from "../rolldown-plugins/routing.ts"
+import { getPages } from "../rolldown-plugins/routing.ts"
 import { baseRolldownPlugns } from "../utils/rolldown.ts"
 import { p } from "../utils/path.ts"
 import * as path from "node:path"
@@ -14,7 +14,6 @@ export const argsSchema: ParseArgsOptionsConfig = {
 
 export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
   process.env.NODE_ENV = "production"
-  // const cwd = process.cwd()
 
   const clientBaseDir = "/_assets/js/"
 
@@ -24,20 +23,22 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
 
   console.log("building app...")
 
-  const routes = await getRoutes()
-  // console.log("routes", routes)
+  const pages = await getPages()
 
   console.log("build for client")
-  const clientBuildResult = await rolldownBuild({
+  const skipClient = process.env.SOLIDOC_SKIP_CLIENT === "1"
+  const clientBuildResult = skipClient ? { output: [{ fileName: "client.js" }] } : await rolldownBuild({
     input: path.resolve(import.meta.dirname, "../../client/entry/client.tsx"),
     output: {
-      dir: p(distDir + clientBaseDir),
+      dir: path.resolve(distDir + clientBaseDir),
       format: "esm",
     },
     platform: "browser",
-    treeshake: true,
+    // Keep `import "./theme.css"` (side-effect only imports) alive.
+    // Keep `import "./theme.css"` (side-effect only imports) alive.
+    treeshake: { moduleSideEffects: [{ test: /\.css$/, sideEffects: true }] },
     plugins: baseRolldownPlugns({
-      config, routes,
+      config, pages,
       solidOptions: {
         generate: "dom",
         hydratable: true,
@@ -47,9 +48,9 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
     })
   })
 
-  console.log("buid for prerendering")
+  console.log("build for prerendering")
   const ssrEntryFile = p("node_modules/.solidocs/ssr-build.js")
-  await rolldownBuild({
+  if(process.env.SOLIDOC_SKIP_SSR !== "1") await rolldownBuild({
     input: path.resolve(import.meta.dirname, "../../client/entry/ssr.tsx"),
     output: {
       file: ssrEntryFile,
@@ -58,17 +59,14 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
     },
     platform: "node",
     treeshake: true,
-    /// FIXME: bug.
     external: id => {
       if(id.startsWith("solidocs:")) return false
       if(id === "solid-js" || id === "solid-js/web") return true
-      // if(id === "@solidjs/router") return false
       if(id.endsWith(".jsx") || id.endsWith(".tsx")) return false
-      // if(id.startsWith(cwd+"/node_modules/") || !id.startsWith("/")) return true
       return false
     },
     plugins: baseRolldownPlugns({
-      config, routes,
+      config, pages,
       solidOptions: {
         generate: "ssr",
         hydratable: true,
@@ -80,14 +78,29 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
 
   console.log("prerendering...")
 
-  //const render = (await import(ssrEntryFile)).render as typeof render
+  // Rolldown >= 1.2 no longer bundles CSS, so inline the default theme
+  // stylesheet directly into every page.
+  const themeCss = await fs.readFile(
+    path.resolve(import.meta.dirname, "../../client/theme/styles/theme.css"),
+    "utf8",
+  )
+  const themeStyleTag = `<style>${themeCss}</style>`
+
   const render = (await import(ssrEntryFile)).render as AppRender
 
-  await Promise.all(routes.map(async route => {
-    console.log("path:", route[0])
-    const content = "<!DOCTYPE html>"+await render((config.basePath+"/"+route[0]).replaceAll(/\/+/g, "/"), (config.basePath + clientBaseDir + clientBuildResult.output[0].fileName).replaceAll(/\/+/g, "/"), config.basePath)
-    await fs.writeFile(path.resolve(distDir, route[1].replace(/.md$/, ".html")), content)
-  }))
+  // The router matches against the path without the base prefix,
+  // so pass the site-relative url and let <Main /> build the full url.
+  for (const page of pages) {
+    console.log("path:", page.path)
+    const routeUrl = page.path
+    const entryUrl = (config.basePath + clientBaseDir + clientBuildResult.output[0]?.fileName).replaceAll(/\/{2,}/g, "/")
+    const html = await render(routeUrl, entryUrl, config.basePath, page)
+    // Rolldown no longer bundles CSS: inline the theme stylesheet into <head>.
+    const content = "<!DOCTYPE html>" + html.replace("</head>", themeStyleTag + "</head>")
+    const outFile = path.resolve(distDir, page.src.replace(/\.md$/, ".html"))
+    await fs.mkdir(path.dirname(outFile), { recursive: true })
+    await fs.writeFile(outFile, content)
+  }
 
   console.log("done.")
 
