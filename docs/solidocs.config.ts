@@ -9,7 +9,7 @@ export default defineConfig({
     siteTitle: "Solidocs",
     nav: [
       { text: "Guide", link: "/guide/getting-started/" },
-      { text: "GitHub", link: "https://github.com" },
+      { text: "GitHub", link: "https://github.com/akku1139/solidocs/" },
     ],
   },
 })

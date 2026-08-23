@@ -10,7 +10,7 @@ hero:
       link: /guide/getting-started/
       theme: brand
     - text: GitHub
-      link: https://github.com
+      link: https://github.com/akku1139/solidocs/
       theme: alt
   features:
     - icon: ⚡

@@ -22,6 +22,8 @@ declare module "solidocs:routes" {
     layout?: "home" | "doc" | "page"
     title?: string
     description?: string
+    /** Global nav position (sidebar/pager/home cards); lower first. */
+    order?: number
     hero?: VirtualHeroConfig
   }
 

@@ -76,6 +76,12 @@ export interface Frontmatter {
   layout?: "home" | "doc" | "page"
   title?: string
   description?: string
+  /**
+   * Position in the global navigation (sidebar, pager and home cards).
+   * Lower comes first; unordered pages keep alphabetical order after
+   * all ordered ones.
+   */
+  order?: number
   hero?: HeroConfig
 }
 

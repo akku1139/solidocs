@@ -24,6 +24,9 @@ export const extractFrontmatter = (source: string): {
       data.title = value
     } else if(key === "description") {
       data.description = value
+    } else if(key === "order") {
+      const n = Number(value)
+      if(Number.isFinite(n)) data.order = n
     }
   }
 

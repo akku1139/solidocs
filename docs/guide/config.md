@@ -1,5 +1,6 @@
 ---
 title: Configuration
+order: 2
 description: All configuration options for Solidocs
 ---
 
@@ -59,3 +60,16 @@ Use it for landing pages (`index.md`).
 The default theme ships with light/dark modes. The toggle in the header
 stores the choice in `localStorage`; by default the theme follows the
 visitor's system preference.
+
+## Page order
+
+Set `order` in a page's frontmatter to control its position in the global
+navigation (sidebar, pager and home cards). Lower numbers come first;
+pages without `order` follow alphabetically after the ordered ones.
+
+```yaml
+---
+title: Configuration
+order: 2
+---
+```

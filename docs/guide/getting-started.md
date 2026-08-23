@@ -1,5 +1,6 @@
 ---
 title: Getting Started
+order: 1
 description: Set up your first Solidocs site
 ---
 

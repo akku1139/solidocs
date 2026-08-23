@@ -28,7 +28,14 @@ export const getPages = async (): Promise<PageMeta[]> => {
     } satisfies PageMeta
   }))
 
-  return pages.sort((a, b) => a.path.localeCompare(b.path))
+  // Global nav order: explicit frontmatter `order` first (lower comes
+  // first), then alphabetical by route path.
+  return pages.sort((a, b) => {
+    const oa = a.frontmatter.order ?? Number.POSITIVE_INFINITY
+    const ob = b.frontmatter.order ?? Number.POSITIVE_INFINITY
+    if(oa !== ob) return oa - ob
+    return a.path.localeCompare(b.path)
+  })
 }
 
 export const routingPlugin = (options: {
