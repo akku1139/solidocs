@@ -1,10 +1,28 @@
 // Type declarations for solidocs' rolldown virtual modules.
 
 declare module "solidocs:routes" {
+  interface VirtualHeroAction {
+    text: string
+    link: string
+    theme?: "brand" | "alt"
+  }
+  interface VirtualHeroFeature {
+    icon?: string
+    title: string
+    details?: string
+  }
+  interface VirtualHeroConfig {
+    name?: string
+    text?: string
+    tagline?: string
+    actions?: VirtualHeroAction[]
+    features?: VirtualHeroFeature[]
+  }
   interface VirtualFrontmatter {
     layout?: "home" | "doc" | "page"
     title?: string
     description?: string
+    hero?: VirtualHeroConfig
   }
 
   interface VirtualOutlineEntry {

@@ -251,6 +251,144 @@ img { max-width: 100%; }
   .solidocs-sidebar { display: none; }
 }
 
+/* Landing hero (frontmatter `hero:` on the home page) */
+.solidocs-hero {
+  position: relative;
+  padding: 96px 24px 24px;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Soft brand glow behind the headline. */
+.solidocs-hero::before {
+  content: "";
+  position: absolute;
+  inset: -40% -20% auto;
+  height: 480px;
+  background:
+    radial-gradient(ellipse at 30% 40%, color-mix(in srgb, var(--sd-brand) 22%, transparent), transparent 65%),
+    radial-gradient(ellipse at 70% 35%, rgba(155, 89, 245, .16), transparent 65%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.solidocs-hero-name {
+  font-size: clamp(3rem, 9vw, 4.6rem);
+  line-height: 1.05;
+  margin: 0 0 14px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  background: linear-gradient(120deg, var(--sd-brand) 10%, #9b59f5 55%, #e05fd0 90%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: solidocs-hero-shift 8s ease-in-out infinite;
+}
+
+@keyframes solidocs-hero-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.solidocs-hero-text {
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  font-weight: 700;
+  color: var(--sd-text);
+  margin: 0 0 10px;
+}
+
+.solidocs-hero-tagline {
+  max-width: 560px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--sd-text-soft);
+}
+
+.solidocs-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.solidocs-hero-action {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 22px;
+  min-width: 96px;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid var(--sd-border);
+  color: var(--sd-text);
+  font-weight: 600;
+  font-size: .95rem;
+  transition: transform .15s ease, box-shadow .15s ease,
+    border-color .15s ease, background-color .15s ease;
+}
+
+.solidocs-hero-action:hover { transform: translateY(-2px); border-color: var(--sd-brand); }
+
+/* Filled accent button. */
+.solidocs-hero-action.is-brand {
+  background: linear-gradient(120deg, var(--sd-brand), #9b59f5);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--sd-brand) 35%, transparent);
+}
+
+.solidocs-hero-action.is-brand:hover {
+  box-shadow: 0 10px 26px color-mix(in srgb, var(--sd-brand) 45%, transparent);
+}
+
+.solidocs-hero-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+  max-width: 960px;
+  margin: 64px auto 0;
+  text-align: left;
+}
+
+.solidocs-hero-feature {
+  position: relative;
+  padding: 22px 20px;
+  border: 1px solid var(--sd-border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--sd-bg-soft) 60%, transparent);
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.solidocs-hero-feature:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--sd-brand) 55%, var(--sd-border));
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .08);
+}
+
+.solidocs-hero-feature-icon {
+  font-size: 1.7rem;
+  margin-bottom: 10px;
+}
+
+.solidocs-hero-feature h2 {
+  font-size: 1.02rem;
+  margin: 0 0 8px;
+  color: var(--sd-text);
+}
+
+.solidocs-hero-feature p {
+  margin: 0;
+  font-size: .92rem;
+  line-height: 1.55;
+  color: var(--sd-text-soft);
+}
+
+@media (max-width: 768px) {
+  .solidocs-hero { padding-top: 56px; }
+}
+
 /* Home layout */
 .solidocs-home {
   max-width: 960px;

@@ -7,6 +7,7 @@ import { Sidebar } from "./Sidebar.tsx"
 import { Outline } from "./Outline.tsx"
 import { Pager } from "./Pager.tsx"
 import { Header } from "./Header.tsx"
+import { Hero } from "./Hero.tsx"
 import { HomeNav } from "./HomeNav.tsx"
 
 /**
@@ -17,7 +18,20 @@ import { HomeNav } from "./HomeNav.tsx"
  */
 export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
   const location = useLocation()
-  const currentPath = () => normalizeRoutePath(location.pathname)
+  // Route paths in `solidocs:routes` are site-relative, while the
+  // router location includes the configured base path — strip it.
+  const basePrefix = () => {
+    const base = props.site?.basePath ?? "/"
+    return base.endsWith("/") ? base : `${base}/`
+  }
+  const currentPath = () => {
+    const pathname = location.pathname
+    const base = basePrefix()
+    if(base !== "/" && pathname.startsWith(base)) {
+      return normalizeRoutePath(pathname.slice(base.length - 1))
+    }
+    return normalizeRoutePath(pathname)
+  }
 
   // Metadata of the routed page, resolved from the virtual route list.
   const meta = createMemo(() =>
@@ -33,15 +47,34 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
           when={!isHome()}
           fallback={
             <main class="solidocs-home">
-              <h1 class="solidocs-home-title">{props.site?.title ?? "Solidocs"}</h1>
-              <p class="solidocs-home-tagline">{props.site?.description ?? ""}</p>
-              <div class="solidocs-doc">
-                {props.children}
-                <HomeNav />
-              </div>
-              <p class="solidocs-home-footer-note">
-                <a href={props.site?.basePath ?? "/"}>{props.site?.title ?? "Solidocs"}</a>
-              </p>
+              <Show
+                when={meta()?.frontmatter.hero}
+                fallback={
+                  <>
+                    <h1 class="solidocs-home-title">{props.site?.title ?? "Solidocs"}</h1>
+                    <p class="solidocs-home-tagline">{props.site?.description ?? ""}</p>
+                  </>
+                }
+              >
+                {hero => (
+                  <>
+                    <Hero hero={hero()} siteTitle={props.site?.title ?? "Solidocs"} />
+                    <div class="solidocs-home-body">
+                      {props.children}
+                      <HomeNav />
+                    </div>
+                  </>
+                )}
+              </Show>
+              <Show when={!meta()?.frontmatter.hero}>
+                <div class="solidocs-doc">
+                  {props.children}
+                  <HomeNav />
+                </div>
+                <p class="solidocs-home-footer-note">
+                  <a href={props.site?.basePath ?? "/"}>{props.site?.title ?? "Solidocs"}</a>
+                </p>
+              </Show>
             </main>
           }
         >

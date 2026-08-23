@@ -25,10 +25,58 @@ export interface OutlineEntry {
   id: string
 }
 
+/** Action button in a home hero (`hero.actions`). */
+export interface HeroAction {
+  /** Button label. */
+  text: string
+  /** Absolute url or site-relative path (base path is prepended). */
+  link: string
+  /** `brand` renders the filled accent style, default is subtle. */
+  theme?: "brand" | "alt"
+}
+
+/** Feature card in a home hero (`hero.features`). */
+export interface HeroFeature {
+  icon?: string
+  title: string
+  details?: string
+}
+
+/**
+ * VitePress-style hero section, driven by the home page frontmatter:
+ *
+ *   ---
+ *   layout: home
+ *   hero:
+ *     name: ...
+ *     text: ...
+ *     tagline: ...
+ *     actions:
+ *       - text: Get Started
+ *         link: /guide/getting-started/
+ *         theme: brand
+ *     features:
+ *       - icon: ⚡
+ *         title: Instant
+ *         details: ...
+ *   ---
+ */
+export interface HeroConfig {
+  /** Big gradient headline (defaults to the site title). */
+  name?: string
+  /** Short punchy line under the name. */
+  text?: string
+  /** Muted supporting line. */
+  tagline?: string
+  actions?: HeroAction[]
+  features?: HeroFeature[]
+}
+
 export interface Frontmatter {
   layout?: "home" | "doc" | "page"
   title?: string
   description?: string
+  hero?: HeroConfig
 }
 
 /** One entry of the header navigation (`themeConfig.nav`). */
