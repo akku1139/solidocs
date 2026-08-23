@@ -6,7 +6,7 @@ import { PageMetaProvider, normalizeRoutePath } from "./PageMetaProvider.tsx"
 import { Sidebar } from "./Sidebar.tsx"
 import { Outline } from "./Outline.tsx"
 import { Pager } from "./Pager.tsx"
-import { ThemeToggle } from "./ThemeToggle.tsx"
+import { Header } from "./Header.tsx"
 import { HomeNav } from "./HomeNav.tsx"
 
 /**
@@ -63,9 +63,3 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
   )
 }
 
-const Header = (props: { site?: SiteConfig }) => (
-  <header class="solidocs-header">
-    <a href={props.site?.basePath ?? "/"} class="solidocs-header-brand">{props.site?.title ?? "Solidocs"}</a>
-    <ThemeToggle />
-  </header>
-)

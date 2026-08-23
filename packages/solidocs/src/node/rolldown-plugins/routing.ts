@@ -86,6 +86,7 @@ export const routingPlugin = (options: {
           description: options.config.description,
           lang: options.config.lang ?? "en",
           basePath: options.config.basePath,
+          themeConfig: options.config.themeConfig,
         })}`,
       }
     }

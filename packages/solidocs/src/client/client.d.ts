@@ -36,11 +36,24 @@ declare module "solidocs:basepath" {
 }
 
 declare module "solidocs:site" {
+  interface VirtualThemeNavLink {
+    text: string
+    link: string
+    target?: string
+  }
+  interface VirtualThemeConfig {
+    /** Brand text; `false` hides it (defaults to the site title). */
+    siteTitle?: string | false
+    logo?: string
+    link?: string
+    nav?: VirtualThemeNavLink[]
+  }
   interface VirtualSiteConfig {
     title: string
     description?: string
     lang: string
     basePath: string
+    themeConfig?: VirtualThemeConfig
   }
   const site: VirtualSiteConfig
   export default site

@@ -103,9 +103,49 @@ img { max-width: 100%; }
 }
 
 .solidocs-header-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-weight: 700;
   font-size: 1.05rem;
   color: var(--sd-text);
+}
+
+.solidocs-header-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+}
+
+.solidocs-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.solidocs-header-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.solidocs-header-link {
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: var(--sd-text-soft);
+  font-size: 14px;
+  transition: color .2s, background-color .2s;
+}
+
+.solidocs-header-link:hover {
+  color: var(--sd-text);
+  background: var(--sd-border);
+}
+
+@media (max-width: 768px) {
+  .solidocs-header { padding: 0 16px; }
+  /* Keep the brand readable; drop nav links on very narrow screens. */
+  .solidocs-header-nav { display: none; }
 }
 
 .solidocs-layout {

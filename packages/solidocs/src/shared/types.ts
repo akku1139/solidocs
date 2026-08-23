@@ -31,12 +31,38 @@ export interface Frontmatter {
   description?: string
 }
 
+/** One entry of the header navigation (`themeConfig.nav`). */
+export interface ThemeNavLink {
+  /** Label shown in the header. */
+  text: string
+  /** Absolute url or site-relative path (base path is prepended). */
+  link: string
+  /** Override the anchor target; external links default to `_blank`. */
+  target?: string
+}
+
+/**
+ * Header customization, mirroring VitePress' `themeConfig`.
+ * Set from `solidocs.config.ts` and exposed via `solidocs:site`.
+ */
+export interface ThemeConfig {
+  /** Brand text; `false` hides it (defaults to the site title). */
+  siteTitle?: string | false
+  /** Url of a logo image rendered before the brand text. */
+  logo?: string
+  /** Where the brand links to (defaults to the base path). */
+  link?: string
+  /** Links rendered on the right side of the header. */
+  nav?: ThemeNavLink[]
+}
+
 /** Site level configuration exposed to the client theme. */
 export interface SiteConfig {
   title: string
   description?: string
   lang: string
   basePath: string
+  themeConfig?: ThemeConfig
 }
 
 /**

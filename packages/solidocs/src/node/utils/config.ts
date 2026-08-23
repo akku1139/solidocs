@@ -13,6 +13,23 @@ export const ConfigSchema = v.object({
   //   v.pipe(v.string(), v.url()),
   // ]))
   basePath: v.optional(v.string(), "/"), // TODO: support relative base path
+  /// Header customization (VitePress style)
+  themeConfig: v.optional(
+    v.object({
+      siteTitle: v.optional(v.string()),
+      logo: v.optional(v.string()),
+      link: v.optional(v.string()),
+      nav: v.optional(
+        v.array(
+          v.object({
+            text: v.string(),
+            link: v.string(),
+            target: v.optional(v.string()),
+          }),
+        ),
+      ),
+    }),
+  ),
 })
 
 export type UserConfig = v.InferInput<typeof ConfigSchema>
