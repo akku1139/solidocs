@@ -44,8 +44,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(acorn@8.15.0)(rollup@4.44.2)
       '@solidjs/router':
-        specifier: ^0.15.3
-        version: 0.15.3(patch_hash=87026fa4d3c0bef0ee3d5f8f5b2aa7fcb842b6a440ee2af87a7e08973096b278)(solid-js@1.9.15)
+        specifier: ^1.0.0
+        version: 1.0.0(patch_hash=87026fa4d3c0bef0ee3d5f8f5b2aa7fcb842b6a440ee2af87a7e08973096b278)(solid-js@1.9.15)
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
@@ -561,6 +561,11 @@ packages:
 
   '@solidjs/router@0.15.3':
     resolution: {integrity: sha512-iEbW8UKok2Oio7o6Y4VTzLj+KFCmQPGEpm1fS3xixwFBdclFVBvaQVeibl1jys4cujfAK5Kn6+uG2uBm3lxOMw==}
+    peerDependencies:
+      solid-js: ^1.8.6
+
+  '@solidjs/router@1.0.0':
+    resolution: {integrity: sha512-cCSk1hvgCowiMa9bzzYWHiLu1U4E22+DfJe6/rOwAyECKrxc3jrd5QnoW3sDDJtW+e077cz/M67bPl3DqOBw1Q==}
     peerDependencies:
       solid-js: ^1.8.6
 
@@ -1600,13 +1605,13 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.44.2':
     optional: true
 
-  '@solidjs/router@0.15.3(patch_hash=87026fa4d3c0bef0ee3d5f8f5b2aa7fcb842b6a440ee2af87a7e08973096b278)(solid-js@1.9.15)':
-    dependencies:
-      solid-js: 1.9.15
-
   '@solidjs/router@0.15.3(patch_hash=87026fa4d3c0bef0ee3d5f8f5b2aa7fcb842b6a440ee2af87a7e08973096b278)(solid-js@1.9.7)':
     dependencies:
       solid-js: 1.9.7
+
+  '@solidjs/router@1.0.0(patch_hash=87026fa4d3c0bef0ee3d5f8f5b2aa7fcb842b6a440ee2af87a7e08973096b278)(solid-js@1.9.15)':
+    dependencies:
+      solid-js: 1.9.15
 
   '@turbo/darwin-64@2.10.11':
     optional: true
