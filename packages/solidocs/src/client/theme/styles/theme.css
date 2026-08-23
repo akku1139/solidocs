@@ -58,6 +58,36 @@ code, pre {
   font-size: .875em;
 }
 
+/* Syntax highlighting (shiki dual themes): pick the palette with the
+   active theme's CSS variables — no re-render on toggle. */
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+}
+[data-theme="dark"] .shiki,
+[data-theme="dark"] .shiki span {
+  color: var(--shiki-dark);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .shiki,
+  :root:not([data-theme="light"]) .shiki span {
+    color: var(--shiki-dark);
+  }
+}
+
+/* Code blocks */
+.solidocs-doc pre.shiki {
+  padding: 16px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--sd-border);
+  overflow-x: auto;
+  font-size: .875rem;
+  line-height: 1.7;
+  background-color: var(--sd-code-bg);
+}
+.solidocs-doc pre.shiki code { display: block; }
+.shiki .line { display: inline-block; width: 100%; }
+
 pre {
   background: var(--sd-code-bg);
   padding: 16px;

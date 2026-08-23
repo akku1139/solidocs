@@ -8,6 +8,23 @@ import { fixSolidImportPlugin } from "../rolldown-plugins/fix-solid-import.ts"
 import { mdxDomExpressionsPlugin } from "../rolldown-plugins/mdx-dom-expressions.ts"
 import { stripFrontmatterPlugin } from "../rolldown-plugins/strip-frontmatter.ts"
 import { headingSlugPlugin } from "../rolldown-plugins/heading-slugs.ts"
+import rehypeShiki from "@shikijs/rehype"
+
+/**
+ * Dual-theme syntax highlighting: generated markup carries CSS
+ * variables for both palettes (`--shiki-light` / `--shiki-dark`), so
+ * the theme's light/dark toggle works without re-rendering.
+ */
+const shikiOptions = {
+  themes: {
+    light: "github-light",
+    dark: "github-dark",
+  },
+  defaultColor: false,
+  // Highlight language-less fences as plain text so every code block
+  // gets the same themed markup instead of falling back to raw <pre>.
+  defaultLanguage: "text",
+} as const
 
 // TODO: use filter https://rolldown.rs/guide/plugin-development
 export const baseRolldownPlugns = (options: {
@@ -23,6 +40,7 @@ export const baseRolldownPlugns = (options: {
     mdx({
       jsx: true,
       jsxImportSource: "solid-js",
+      rehypePlugins: [[rehypeShiki, shikiOptions]],
     }),
     mdxDomExpressionsPlugin,
     solidPlugin({

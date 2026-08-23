@@ -2,5 +2,3 @@ packages:
   - packages/*
   - docs
 
-patchedDependencies:
-  '@solidjs/router': patches/@solidjs__router.patch

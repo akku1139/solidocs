@@ -61,6 +61,18 @@ The default theme ships with light/dark modes. The toggle in the header
 stores the choice in `localStorage`; by default the theme follows the
 visitor's system preference.
 
+## Syntax highlighting
+
+Code blocks are highlighted with Shiki using the GitHub light/dark
+themes. Colors follow the active theme mode automatically — no
+configuration needed:
+
+````
+```ts
+export const greet = (name: string) => `Hello, ${name}!`
+```
+````
+
 ## Page order
 
 Set `order` in a page's frontmatter to control its position in the global
