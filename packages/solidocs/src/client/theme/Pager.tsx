@@ -1,4 +1,5 @@
 import routes from "solidocs:routes"
+import basepath from "solidocs:basepath"
 import { usePageMeta } from "./PageMetaProvider.tsx"
 
 /**
@@ -8,6 +9,9 @@ import { usePageMeta } from "./PageMetaProvider.tsx"
 export const Pager = () => {
   const meta = usePageMeta()
   const index = () => routes.findIndex(r => r.path === meta?.()?.path)
+
+  // Prefix site-relative route paths with the configured base path.
+  const href = (path: string) => (basepath + path).replaceAll(/\/+/g, "/")
 
   const prev = () => {
     let j = index() - 1
@@ -27,7 +31,7 @@ export const Pager = () => {
       {(() => {
         const p = prev()
         return p ? (
-          <a class="solidocs-pager-prev" href={p.path}>
+          <a class="solidocs-pager-prev" href={href(p.path)}>
             <span>Previous</span>
             <strong>{p.title}</strong>
           </a>
@@ -36,7 +40,7 @@ export const Pager = () => {
       {(() => {
         const n = next()
         return n ? (
-          <a class="solidocs-pager-next" href={n.path}>
+          <a class="solidocs-pager-next" href={href(n.path)}>
             <span>Next</span>
             <strong>{n.title}</strong>
           </a>

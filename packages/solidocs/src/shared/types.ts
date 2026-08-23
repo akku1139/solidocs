@@ -63,12 +63,14 @@ export type App = Component<Partial<{
 /**
  * Renders one page to a full HTML document.
  * `page` carries per-page head information resolved at build time,
- * `styleTag` the inline theme stylesheet markup.
+ * `site` the site config (virtual `solidocs:site`) and `styleTag`
+ * the inline theme stylesheet markup.
  */
 export type AppRender = (
-  url: string,
+  url: string, 
   entry: string,
   base: string,
   page: Pick<PageMeta, "path" | "title" | "frontmatter">,
+  site: SiteConfig,
   styleTag?: string,
 ) => string | Promise<string>

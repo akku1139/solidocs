@@ -95,7 +95,10 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
     console.log("path:", page.path)
     const routeUrl = page.path
     const entryUrl = (config.basePath + clientBaseDir + clientBuildResult.output[0]?.fileName).replaceAll(/\/{2,}/g, "/")
-    const html = await render(routeUrl, entryUrl, config.basePath, page)
+    const html = await render(routeUrl, entryUrl, config.basePath, page, {
+      ...config,
+      lang: config.lang ?? "en",
+    })
     // Rolldown no longer bundles CSS: inline the theme stylesheet into <head>.
     // The init script applies the stored theme before first paint (no FOUC).
     const content = "<!DOCTYPE html>" + html.replace(

@@ -61,7 +61,7 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
 
 const Header = (props: { site?: SiteConfig }) => (
   <header class="solidocs-header">
-    <a href="/" class="solidocs-header-brand">{props.site?.title ?? "Solidocs"}</a>
+    <a href={props.site?.basePath ?? "/"} class="solidocs-header-brand">{props.site?.title ?? "Solidocs"}</a>
     <ThemeToggle />
   </header>
 )
