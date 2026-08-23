@@ -1,16 +1,31 @@
 ---
 title: Configuration
+description: All configuration options for Solidocs
 ---
 
 # Configuration
 
-Solidocs is configured with a `solidocs.config.ts` file.
+Solidocs is configured with a `solidocs.config.ts` file at your project root.
+
+```ts
+import { defineConfig } from "solidocs"
+
+export default defineConfig({
+  title: "My Site",
+  description: "Document everything",
+  basePath: "/",
+})
+```
 
 ## Options
 
 ### title
 
-The site title, used in the header and the document title.
+The site title, used in the header and as the document title suffix.
+
+### description
+
+The site description, used on home pages and as the meta description fallback.
 
 ### basePath
 
@@ -22,6 +37,8 @@ export default defineConfig({
 })
 ```
 
+All routes and assets are prefixed with this path.
+
 ## Frontmatter
 
 Each page supports frontmatter options:
@@ -31,3 +48,14 @@ Each page supports frontmatter options:
 | `title` | Overrides the page title |
 | `description` | Page description for the meta tag |
 | `layout` | `home`, `doc` or `page` |
+
+### layout: home
+
+Renders a hero section instead of the doc layout — no sidebar or outline.
+Use it for landing pages (`index.md`).
+
+## Dark mode
+
+The default theme ships with light/dark modes. The toggle in the header
+stores the choice in `localStorage`; by default the theme follows the
+visitor's system preference.
