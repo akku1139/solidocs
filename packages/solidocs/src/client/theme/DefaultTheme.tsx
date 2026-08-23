@@ -14,7 +14,9 @@ import { HomeNav } from "./HomeNav.tsx"
  * Default documentation theme: header with site title, global sidebar
  * built from all pages, content and an "on this page" outline.
  * Pages with `layout: home` frontmatter render a hero section instead
- * of the regular doc layout (no sidebar/outline).
+ * of the regular doc layout (no sidebar/outline). The hero lives
+ * outside the centered column so its gradient can span the full
+ * viewport width, flush against the header.
  */
 export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
   const location = useLocation()
@@ -38,6 +40,8 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
     routes.find(route => route.path === currentPath()),
   )
   const isHome = () => meta()?.frontmatter.layout === "home"
+  const hero = () => meta()?.frontmatter.hero
+  const siteTitle = () => props.site?.title ?? "Solidocs"
 
   return (
     <PageMetaProvider value={meta}>
@@ -46,36 +50,37 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
         <Show
           when={!isHome()}
           fallback={
-            <main class="solidocs-home">
-              <Show
-                when={meta()?.frontmatter.hero}
-                fallback={
-                  <>
-                    <h1 class="solidocs-home-title">{props.site?.title ?? "Solidocs"}</h1>
-                    <p class="solidocs-home-tagline">{props.site?.description ?? ""}</p>
-                  </>
-                }
+            <>
+              <Show when={hero()}>
+                {h => <Hero hero={h()} siteTitle={siteTitle()} />}
+              </Show>
+              <main
+                class="solidocs-home"
+                classList={{ "solidocs-home--hero": !!hero() }}
               >
-                {hero => (
-                  <>
-                    <Hero hero={hero()} siteTitle={props.site?.title ?? "Solidocs"} />
-                    <div class="solidocs-home-body">
-                      {props.children}
-                      <HomeNav />
-                    </div>
-                  </>
-                )}
-              </Show>
-              <Show when={!meta()?.frontmatter.hero}>
-                <div class="solidocs-doc">
-                  {props.children}
-                  <HomeNav />
-                </div>
-                <p class="solidocs-home-footer-note">
-                  <a href={props.site?.basePath ?? "/"}>{props.site?.title ?? "Solidocs"}</a>
-                </p>
-              </Show>
-            </main>
+                <Show
+                  when={hero()}
+                  fallback={
+                    <>
+                      <h1 class="solidocs-home-title">{siteTitle()}</h1>
+                      <p class="solidocs-home-tagline">{props.site?.description ?? ""}</p>
+                      <div class="solidocs-doc">
+                        {props.children}
+                        <HomeNav />
+                      </div>
+                      <p class="solidocs-home-footer-note">
+                        <a href={props.site?.basePath ?? "/"}>{siteTitle()}</a>
+                      </p>
+                    </>
+                  }
+                >
+                  <div class="solidocs-home-body">
+                    {props.children}
+                    <HomeNav />
+                  </div>
+                </Show>
+              </main>
+            </>
           }
         >
           <div class="solidocs-layout">
@@ -95,4 +100,3 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
     </PageMetaProvider>
   )
 }
-

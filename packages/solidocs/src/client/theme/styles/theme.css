@@ -251,28 +251,31 @@ img { max-width: 100%; }
   .solidocs-sidebar { display: none; }
 }
 
-/* Landing hero (frontmatter `hero:` on the home page) */
+/* Landing hero (frontmatter `hero:` on the home page).
+   Full-bleed banner spanning the viewport, flush against the header. */
 .solidocs-hero {
   position: relative;
-  padding: 96px 24px 24px;
   text-align: center;
   overflow: hidden;
+  border-bottom: 1px solid var(--sd-border);
+  background:
+    radial-gradient(ellipse 60% 90% at 25% 10%, color-mix(in srgb, var(--sd-brand) 16%, transparent), transparent 70%),
+    radial-gradient(ellipse 55% 85% at 75% 15%, rgba(155, 89, 245, .13), transparent 70%),
+    radial-gradient(ellipse 80% 100% at 50% 110%, color-mix(in srgb, var(--sd-brand) 8%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--sd-bg-soft) 70%, var(--sd-bg)) 0%, var(--sd-bg) 100%);
 }
 
-/* Soft brand glow behind the headline. */
-.solidocs-hero::before {
-  content: "";
-  position: absolute;
-  inset: -40% -20% auto;
-  height: 480px;
-  background:
-    radial-gradient(ellipse at 30% 40%, color-mix(in srgb, var(--sd-brand) 22%, transparent), transparent 65%),
-    radial-gradient(ellipse at 70% 35%, rgba(155, 89, 245, .16), transparent 65%);
-  pointer-events: none;
-  z-index: -1;
+/* Horizontal breathing room inside the full-width banner. */
+.solidocs-hero-name,
+.solidocs-hero-text,
+.solidocs-hero-tagline,
+.solidocs-hero-actions {
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .solidocs-hero-name {
+  padding-top: 72px;
   font-size: clamp(3rem, 9vw, 4.6rem);
   line-height: 1.05;
   margin: 0 0 14px;
@@ -314,6 +317,12 @@ img { max-width: 100%; }
   margin-top: 28px;
 }
 
+/* Actions last in the banner: close it out. When feature cards
+   follow, their own padding-bottom handles the spacing. */
+.solidocs-hero-actions:not(:has(~ .solidocs-hero-features)) {
+  padding-bottom: 72px;
+}
+
 .solidocs-hero-action {
   display: inline-flex;
   align-items: center;
@@ -347,8 +356,9 @@ img { max-width: 100%; }
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 18px;
-  max-width: 960px;
-  margin: 64px auto 0;
+  width: min(1080px, calc(100% - 48px));
+  margin: 56px auto 0;
+  padding-bottom: 64px;
   text-align: left;
 }
 
@@ -386,15 +396,21 @@ img { max-width: 100%; }
 }
 
 @media (max-width: 768px) {
-  .solidocs-hero { padding-top: 56px; }
+  .solidocs-hero-name { padding-top: 44px; }
 }
 
 /* Home layout */
 .solidocs-home {
   max-width: 960px;
+  width: 100%;
   margin: 0 auto;
   padding: 72px 24px 48px;
   text-align: center;
+}
+
+/* Below the full-bleed hero banner the body starts right away. */
+.solidocs-home--hero {
+  padding-top: 8px;
 }
 
 .solidocs-home-title {
@@ -413,14 +429,13 @@ img { max-width: 100%; }
 }
 
 .solidocs-home .solidocs-doc { text-align: left; max-width: 720px; margin: 0 auto; }
-/* Hero pages: content below the hero gets breathing room + a divider. */
-.solidocs-home-body { padding: 40px 24px 0; }
+/* Content below the full-bleed hero banner. The banner's own
+   border-bottom is the divider — no extra rule needed here. */
+.solidocs-home-body { padding: 32px 24px 0; }
 .solidocs-home-body > .solidocs-doc {
   text-align: left;
   max-width: 760px;
   margin: 0 auto;
-  border-top: 1px solid var(--sd-border);
-  padding-top: 32px;
 }
 
 /* Home navigation cards */
