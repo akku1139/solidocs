@@ -6,6 +6,7 @@ import { PageMetaProvider, normalizeRoutePath } from "./PageMetaProvider.tsx"
 import { Sidebar } from "./Sidebar.tsx"
 import { Outline } from "./Outline.tsx"
 import { Pager } from "./Pager.tsx"
+import { ThemeToggle } from "./ThemeToggle.tsx"
 
 /**
  * Default documentation theme: header with site title, global sidebar
@@ -61,5 +62,6 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
 const Header = (props: { site?: SiteConfig }) => (
   <header class="solidocs-header">
     <a href="/" class="solidocs-header-brand">{props.site?.title ?? "Solidocs"}</a>
+    <ThemeToggle />
   </header>
 )

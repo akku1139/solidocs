@@ -63,7 +63,8 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
     await fs.readFile(path.resolve(import.meta.dirname, "../../client/entry/dev.html"))
   ).toString().replace(
     "</head>",
-    `<link id="solidocs-dev-css" rel="stylesheet" href="/_dev/theme.css">
+    `<script>try{var t=localStorage.getItem("solidocs-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+    <link id="solidocs-dev-css" rel="stylesheet" href="/_dev/theme.css">
     <script>
       new EventSource("${config.basePath}/_dev/reload").addEventListener("reload", () => location.reload())
     </script>

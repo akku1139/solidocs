@@ -85,6 +85,7 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
     "utf8",
   )
   const themeStyleTag = `<style>${themeCss}</style>`
+  const themeInitScript = `<script>try{var t=localStorage.getItem("solidocs-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>`
 
   const render = (await import(ssrEntryFile)).render as AppRender
 
@@ -96,7 +97,11 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
     const entryUrl = (config.basePath + clientBaseDir + clientBuildResult.output[0]?.fileName).replaceAll(/\/{2,}/g, "/")
     const html = await render(routeUrl, entryUrl, config.basePath, page)
     // Rolldown no longer bundles CSS: inline the theme stylesheet into <head>.
-    const content = "<!DOCTYPE html>" + html.replace("</head>", themeStyleTag + "</head>")
+    // The init script applies the stored theme before first paint (no FOUC).
+    const content = "<!DOCTYPE html>" + html.replace(
+      "</head>",
+      themeInitScript + themeStyleTag + "</head>",
+    )
     const outFile = path.resolve(distDir, page.src.replace(/\.md$/, ".html"))
     await fs.mkdir(path.dirname(outFile), { recursive: true })
     await fs.writeFile(outFile, content)
