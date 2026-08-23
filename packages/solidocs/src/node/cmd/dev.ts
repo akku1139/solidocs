@@ -55,12 +55,17 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
     if(data.code === "END") resolve()
   }))
 
+  // Rolldown no longer emits CSS: serve the theme stylesheet and inject it.
+  const themeCssPath = path.resolve(import.meta.dirname, "../../client/theme/styles/theme.css")
+  const serveThemeCss = async () => fs.readFile(themeCssPath, "utf8")
+
   const devHtml = (
     await fs.readFile(path.resolve(import.meta.dirname, "../../client/entry/dev.html"))
   ).toString().replace(
     "</head>",
-    `<script>
-      new EventSource("/_dev/reload").addEventListener("reload", () => location.reload())
+    `<link id="solidocs-dev-css" rel="stylesheet" href="/_dev/theme.css">
+    <script>
+      new EventSource("${config.basePath}/_dev/reload").addEventListener("reload", () => location.reload())
     </script>
     </head>`,
   )
@@ -82,6 +87,10 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
     reloadListeners = reloadListeners.filter(l => l !== notify)
     if(!closed) await stream.close()
   }))
+  .get("/_dev/theme.css", async (c) => {
+    const css = await serveThemeCss()
+    return c.body(css, 200, { "Content-Type": "text/css" })
+  })
   .get("/_dev/*", async (c) => {
     const targetPath = c.req.path.replace(/^\/_dev\//, "")
     // FIXME: Parent directory leakage via ../

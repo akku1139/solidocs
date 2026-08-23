@@ -5,6 +5,7 @@ import routes from "solidocs:routes"
 import { PageMetaProvider, normalizeRoutePath } from "./PageMetaProvider.tsx"
 import { Sidebar } from "./Sidebar.tsx"
 import { Outline } from "./Outline.tsx"
+import { Pager } from "./Pager.tsx"
 
 /**
  * Default documentation theme: header with site title, global sidebar
@@ -42,7 +43,10 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
           <div class="solidocs-layout">
             <Sidebar pages={routes} currentPath={currentPath} basePath={props.site?.basePath ?? "/"} />
             <main class="solidocs-content">
-              <article class="solidocs-doc">{props.children}</article>
+              <article class="solidocs-doc">
+                {props.children}
+                <Pager />
+              </article>
             </main>
             <div class="solidocs-aside">
               <Outline />

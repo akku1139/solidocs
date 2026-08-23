@@ -187,3 +187,32 @@ img { max-width: 100%; }
 }
 
 .solidocs-home .solidocs-doc { text-align: left; max-width: 720px; margin: 0 auto; }
+
+/* Pager (prev / next page navigation) */
+.solidocs-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--sd-border);
+}
+.solidocs-pager a {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  border: 1px solid var(--sd-border);
+  border-radius: 8px;
+  text-decoration: none;
+  min-width: 40%;
+}
+.solidocs-pager a:hover { border-color: var(--sd-accent); }
+.solidocs-pager-next { margin-left: auto; text-align: right; }
+.solidocs-pager span {
+  font-size: 12px;
+  color: var(--sd-text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.solidocs-pager strong { color: var(--sd-text); font-size: 15px; }
