@@ -89,11 +89,11 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
 
   const render = (await import(ssrEntryFile)).render as AppRender
 
-  // The router matches against the path without the base prefix,
-  // so pass the site-relative url and let <Main /> build the full url.
+  // Router 1.x matches against the full location (including the base
+  // path), so pass base + route as the prerender url.
   for (const page of pages) {
     console.log("path:", page.path)
-    const routeUrl = page.path
+    const routeUrl = (config.basePath + page.path).replaceAll(/\/{2,}/g, "/")
     const entryUrl = (config.basePath + clientBaseDir + clientBuildResult.output[0]?.fileName).replaceAll(/\/{2,}/g, "/")
     const html = await render(routeUrl, entryUrl, config.basePath, page, {
       ...config,

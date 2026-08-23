@@ -31,7 +31,12 @@ export const getPages = async (): Promise<PageMeta[]> => {
   return pages.sort((a, b) => a.path.localeCompare(b.path))
 }
 
-export const routingPlugin = (options: { config: ParsedConfig, pages: PageMeta[] }): Plugin => ({
+export const routingPlugin = (options: {
+  config: ParsedConfig,
+  pages: PageMeta[],
+  /** Direct component references for SSR prerendering (no lazy loading). */
+  ssr?: boolean,
+}): Plugin => ({
   name: "solidocs-routing",
   resolveId(src) {
     if(src === "solidocs:routes") return "\0" + src
@@ -40,17 +45,29 @@ export const routingPlugin = (options: { config: ParsedConfig, pages: PageMeta[]
   },
   load(id) {
     if(id === "\0solidocs:routes") {
-      const routes = options.pages.map(page => `{
+      // During SSR prerendering all chunks are inlined, so lazy loading
+      // only delays the first render past what renderToStringAsync waits
+      // for (empty articles). Static imports keep prerendering reliable.
+      const ssr = options.ssr === true
+      const routes = options.pages.map((page, i) => {
+        const component = ssr
+          ? `Page${i}`
+          : `lazy(() => import(${JSON.stringify(p(page.src))}))`
+        return `{
         path: ${JSON.stringify(page.path)},
         title: ${JSON.stringify(page.title)},
         frontmatter: ${JSON.stringify(page.frontmatter)},
         outline: ${JSON.stringify(page.outline)},
-        component: lazy(() => import(${JSON.stringify(p(page.src))})),
-      }`)
+        component: ${component},
+      }`
+      })
+      const imports = ssr
+        ? options.pages.map((page, i) => `import Page${i} from ${JSON.stringify(p(page.src))}`).join("\n")
+        : `import { lazy } from "solid-js"`
       return {
         moduleType: "js",
         code: `
-          import { lazy } from "solid-js"
+          ${imports}
           export default [ ${routes.join(",")} ]
         `,
       }
