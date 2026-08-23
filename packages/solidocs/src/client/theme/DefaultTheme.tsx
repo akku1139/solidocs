@@ -7,6 +7,7 @@ import { Sidebar } from "./Sidebar.tsx"
 import { Outline } from "./Outline.tsx"
 import { Pager } from "./Pager.tsx"
 import { ThemeToggle } from "./ThemeToggle.tsx"
+import { HomeNav } from "./HomeNav.tsx"
 
 /**
  * Default documentation theme: header with site title, global sidebar
@@ -26,21 +27,24 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
 
   return (
     <PageMetaProvider value={meta}>
-      <Show
-        when={!isHome()}
-        fallback={
-          <div class="solidocs-shell">
-            <Header site={props.site} />
+      <div class="solidocs-shell">
+        <Header site={props.site} />
+        <Show
+          when={!isHome()}
+          fallback={
             <main class="solidocs-home">
               <h1 class="solidocs-home-title">{props.site?.title ?? "Solidocs"}</h1>
               <p class="solidocs-home-tagline">{props.site?.description ?? ""}</p>
-              <div class="solidocs-doc">{props.children}</div>
+              <div class="solidocs-doc">
+                {props.children}
+                <HomeNav />
+              </div>
+              <p class="solidocs-home-footer-note">
+                <a href={props.site?.basePath ?? "/"}>{props.site?.title ?? "Solidocs"}</a>
+              </p>
             </main>
-          </div>
-        }
-      >
-        <div class="solidocs-shell">
-          <Header site={props.site} />
+          }
+        >
           <div class="solidocs-layout">
             <Sidebar pages={routes} currentPath={currentPath} basePath={props.site?.basePath ?? "/"} />
             <main class="solidocs-content">
@@ -53,8 +57,8 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
               <Outline />
             </div>
           </div>
-        </div>
-      </Show>
+        </Show>
+      </div>
     </PageMetaProvider>
   )
 }

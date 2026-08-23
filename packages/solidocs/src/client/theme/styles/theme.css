@@ -110,11 +110,14 @@ img { max-width: 100%; }
 
 .solidocs-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  max-width: 1200px;
+  /* sidebar | content | outline — each column owns its track so the
+     "on this page" aside can never wrap below the article. */
+  grid-template-columns: var(--sd-sidebar-w) minmax(0, 1fr) var(--sd-aside-w);
+  align-items: start;
+  max-width: 1280px;
   width: 100%;
   margin: 0 auto;
-  gap: 32px;
+  gap: 40px;
   padding: 24px;
 }
 
@@ -129,8 +132,17 @@ img { max-width: 100%; }
   font-size: .9rem;
 }
 
-.solidocs-sidebar ul { list-style: none; margin: 0; padding: 0; }
-.solidocs-sidebar li { margin: 2px 0; }
+.solidocs-sidebar ul { list-style: none; margin: 0 0 20px; padding: 0; }
+.solidocs-sidebar-section { margin-bottom: 8px; }
+.solidocs-sidebar-heading {
+  font-weight: 700;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--sd-text);
+  margin: 18px 10px 6px;
+}
+.solidocs-sidebar li { margin: 1px 0; }
 .solidocs-sidebar a {
   display: block;
   padding: 5px 10px;
@@ -145,6 +157,7 @@ img { max-width: 100%; }
 }
 
 /* Content */
+.solidocs-content { min-width: 0; }
 .solidocs-doc { line-height: 1.75; }
 .solidocs-doc h1, .solidocs-doc h2, .solidocs-doc h3 { scroll-margin-top: calc(var(--sd-header-h) + 16px); }
 .solidocs-doc h2 { margin-top: 2.2em; border-bottom: 1px solid var(--sd-border); padding-bottom: .3em; }
@@ -179,12 +192,23 @@ img { max-width: 100%; }
   margin-left: -1px;
 }
 .solidocs-outline a:hover { color: var(--sd-text); }
+.solidocs-outline a.is-active {
+  color: var(--sd-brand);
+  border-left-color: var(--sd-brand);
+  font-weight: 600;
+}
 .solidocs-outline-level-3 a { padding-left: 28px; }
 
+/* Narrow screens: drop the outline aside, keep the sidebar. */
 @media (max-width: 1080px) {
-  .solidocs-layout { grid-template-columns: minmax(0, 1fr); }
-  .solidocs-sidebar { display: none; }
+  .solidocs-layout { grid-template-columns: var(--sd-sidebar-w) minmax(0, 1fr); }
   .solidocs-aside { display: none; }
+}
+
+/* Very narrow screens: single column, no sidebar. */
+@media (max-width: 768px) {
+  .solidocs-layout { grid-template-columns: minmax(0, 1fr); padding: 16px; }
+  .solidocs-sidebar { display: none; }
 }
 
 /* Home layout */
@@ -211,6 +235,37 @@ img { max-width: 100%; }
 }
 
 .solidocs-home .solidocs-doc { text-align: left; max-width: 720px; margin: 0 auto; }
+
+/* Home navigation cards */
+.solidocs-home-nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 32px auto 0;
+  max-width: 720px;
+}
+.solidocs-home-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 20px;
+  border: 1px solid var(--sd-border);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+.solidocs-home-card:hover {
+  border-color: var(--sd-brand);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
+}
+.solidocs-home-card strong { color: var(--sd-text); font-size: 15px; }
+.solidocs-home-card span {
+  color: var(--sd-text-soft);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.solidocs-home-footer-note { margin-top: 40px; font-size: .9rem; }
 
 /* Pager (prev / next page navigation) */
 .solidocs-pager {
