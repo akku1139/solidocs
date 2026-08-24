@@ -93,16 +93,19 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
   // path), so pass base + route as the prerender url.
   const entryUrl = (config.basePath + clientBaseDir + clientBuildResult.output[0]?.fileName).replaceAll(/\/{2,}/g, "/")
 
+  const siteConfig = {
+    title: config.title,
+    description: config.description,
+    lang: config.lang ?? "en",
+    basePath: config.basePath,
+    ...(config.site ? { url: config.site.url } : {}),
+    themeConfig: config.themeConfig,
+  }
+
   for (const page of pages) {
     console.log("path:", page.path)
     const routeUrl = (config.basePath + page.path).replaceAll(/\/{2,}/g, "/")
-    const site = {
-      title: config.title,
-      description: config.description,
-      lang: config.lang ?? "en",
-      basePath: config.basePath,
-    }
-    const html = await render(routeUrl, entryUrl, config.basePath, page, site)
+    const html = await render(routeUrl, entryUrl, config.basePath, page, siteConfig)
     // Rolldown no longer bundles CSS: inline the theme stylesheet into <head>.
     // The init script applies the stored theme before first paint (no FOUC).
     const content = "<!DOCTYPE html>" + html.replace(
@@ -121,13 +124,6 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
     path: "/404.html",
     title: "Page not found",
     frontmatter: {},
-  }
-  const siteConfig = {
-    title: config.title,
-    description: config.description,
-    lang: config.lang ?? "en",
-    basePath: config.basePath,
-    ...(config.site ? { url: config.site.url } : {}),
   }
   const notFoundHtml = await render(
     (config.basePath + "404").replaceAll(/\/{2,}/g, "/"),

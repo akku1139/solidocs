@@ -28,9 +28,18 @@ export const ConfigSchema = v.object({
   /// Header customization (VitePress style)
   themeConfig: v.optional(
     v.object({
-      siteTitle: v.optional(v.string()),
+      siteTitle: v.optional(v.union([v.string(), v.boolean()])),
       logo: v.optional(v.string()),
       link: v.optional(v.string()),
+      lastUpdated: v.optional(v.union([v.boolean(), v.string()])),
+      editLink: v.optional(
+        v.object({
+          repo: v.string(),
+          dir: v.optional(v.string()),
+          branch: v.optional(v.string()),
+          text: v.optional(v.string()),
+        }),
+      ),
       nav: v.optional(
         v.array(
           v.object({

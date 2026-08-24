@@ -82,6 +82,12 @@ export interface Frontmatter {
    * all ordered ones.
    */
   order?: number
+  /** Overrides the "Previous page" pager entry (false hides it). */
+  prev?: string | false
+  /** Overrides the "Next page" pager entry (false hides it). */
+  next?: string | false
+  /** ISO timestamp of the last meaningful change (filled at build). */
+  lastUpdated?: string
   hero?: HeroConfig
 }
 
@@ -101,13 +107,27 @@ export interface ThemeNavLink {
  */
 export interface ThemeConfig {
   /** Brand text; `false` hides it (defaults to the site title). */
-  siteTitle?: string | false
+  siteTitle?: string | boolean
   /** Url of a logo image rendered before the brand text. */
   logo?: string
   /** Where the brand links to (defaults to the base path). */
   link?: string
   /** Links rendered on the right side of the header. */
   nav?: ThemeNavLink[]
+  /** Show a "Last updated" line under each article. A string is used
+   *  as a YYYY/MM/DD format template; `true` uses the locale default. */
+  lastUpdated?: boolean | string
+  /** Adds an "edit this page" link under each article. */
+  editLink?: {
+    /** GitHub repository as owner/name. */
+    repo: string
+    /** Repo directory containing the markdown (e.g. "docs"). */
+    dir?: string
+    /** Branch to link to (default "main"). */
+    branch?: string
+    /** Link label (default "Edit this page"). */
+    text?: string
+  }
 }
 
 /** Site level configuration exposed to the client theme. */

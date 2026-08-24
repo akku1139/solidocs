@@ -34,21 +34,29 @@ export const headingSlugPlugin: Plugin = {
           changed = true
           // The template part is a double-quoted JS string, so the id
           // must be single-quoted to avoid breaking out of it.
-          return `["<h${level} id='${id}'",${gap}">` + `${inner}</h${level}>"]`
+          // Wrap the heading text in a stable anchor so users can grab
+          // a link to the section (styled via .solidocs-anchor).
+          const linked = `<a class='solidocs-anchor' href='#${id}' aria-label='Link to this section'>#</a>${inner}`
+          return `["<h${level} id='${id}'",${gap}">` + `${linked}</h${level}>"]`
         },
       )
 
-      // 2) Plain HTML/JSX form: <h2>Options</h2>
+      // 2) Plain HTML/JSX form (dev server output): <h2>Options</h2>
       result = result.replace(
         /(<h([1-6])((?:\s[^>]*)?)>)([\s\S]*?)(<\/h\2>)/g,
         (full, _open: string, level: string, attrs: string | undefined, inner: string) => {
-          if(attrs && /\bid\s*=\s*["'{]/.test(attrs)) return full
-          const text = decodeEntities(stripMarkup(inner)).trim()
-          if(text.length === 0 || text.includes("_tmpl")) return full
-          const id = slugger.slug(text)
-          if(id.length === 0) return full
+          const existing = attrs?.match(/\bid\s*=\s*["']([^"']*)["']/)
+          const id = existing?.[1] ?? (() => {
+            const text = decodeEntities(stripMarkup(inner)).trim()
+            if(text.length === 0 || text.includes("_tmpl")) return undefined
+            return slugger.slug(text)
+          })()
+          if(!id || id.length === 0) return full
+          // Skip headings that already carry an anchor link.
+          if(inner.includes("solidocs-anchor")) return full
           changed = true
-          return `<${level} id=${quote(id)}${attrs ?? ""}>${inner}</${level}>`
+          const anchor = `<a class="solidocs-anchor" href="#${id}" aria-label="Link to this section">#</a>`
+          return `<${level} id="${id}"${attrs ?? ""}>${anchor}${inner}</${level}>`
         },
       )
 
@@ -65,8 +73,6 @@ const stripMarkup = (html: string) =>
     .replace(/^\{\s*"/, "")
     .replace(/"\s*\}\s*$/, "")
 
-/** JSON-quoted attribute value — safe inside generated JS code. */
-const quote = (value: string) => JSON.stringify(value)
 
 /** Resolve the handful of entities markdown emits. */
 const decodeEntities = (text: string) =>

@@ -568,3 +568,62 @@ img { max-width: 100%; }
   background-clip: text;
   color: transparent;
 }
+
+/* Heading anchors (#) — visible on hover/focus for easy linking. */
+.solidocs-doc h1 > .solidocs-anchor,
+.solidocs-doc h2 > .solidocs-anchor,
+.solidocs-doc h3 > .solidocs-anchor,
+.solidocs-doc h4 > .solidocs-anchor {
+  opacity: 0;
+  margin-left: 8px;
+  color: var(--sd-brand);
+  text-decoration: none;
+  transition: opacity .15s ease;
+}
+.solidocs-doc h1:hover > .solidocs-anchor,
+.solidocs-doc h2:hover > .solidocs-anchor,
+.solidocs-doc h3:hover > .solidocs-anchor,
+.solidocs-doc h4:hover > .solidocs-anchor,
+.solidocs-doc h1:focus-visible > .solidocs-anchor,
+.solidocs-doc h2:focus-visible > .solidocs-anchor,
+.solidocs-doc h3:focus-visible > .solidocs-anchor,
+.solidocs-doc h4:focus-visible > .solidocs-anchor {
+  opacity: 1;
+}
+
+/* Code block copy button */
+.solidocs-doc pre { position: relative; }
+.solidocs-copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  border: 1px solid var(--sd-border);
+  border-radius: 6px;
+  background: var(--sd-bg);
+  color: var(--sd-text-soft);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .15s ease, color .15s ease, border-color .15s ease;
+}
+.solidocs-doc pre:hover .solidocs-copy-btn,
+.solidocs-copy-btn:focus-visible,
+.solidocs-copy-btn.is-copied {
+  opacity: 1;
+}
+.solidocs-copy-btn.is-copied { color: var(--sd-brand); border-color: var(--sd-brand); }
+
+/* Last updated + edit link row */
+.solidocs-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px solid var(--sd-border);
+  font-size: .85rem;
+  color: var(--sd-text-soft);
+}
+.solidocs-edit-link { font-weight: 500; }

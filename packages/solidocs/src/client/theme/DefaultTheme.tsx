@@ -9,6 +9,8 @@ import { Pager } from "./Pager.tsx"
 import { Header } from "./Header.tsx"
 import { Hero } from "./Hero.tsx"
 import { HomeNav } from "./HomeNav.tsx"
+import { LastUpdated } from "./LastUpdated.tsx"
+import { MarkdownEnhancer } from "./MarkdownEnhancer.tsx"
 
 /**
  * Default documentation theme: header with site title, global sidebar
@@ -47,6 +49,7 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
 
   return (
     <PageMetaProvider value={meta}>
+      <MarkdownEnhancer />
       <div class="solidocs-shell">
         <Header site={props.site} />
         <Show
@@ -100,6 +103,7 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
               >
                 <article class="solidocs-doc">
                   {props.children}
+                  <LastUpdated site={props.site} />
                   <Pager />
                 </article>
               </Show>

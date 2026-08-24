@@ -24,6 +24,12 @@ declare module "solidocs:routes" {
     description?: string
     /** Global nav position (sidebar/pager/home cards); lower first. */
     order?: number
+    /** Overrides the "Previous page" pager entry (false hides it). */
+    prev?: string | false
+    /** Overrides the "Next page" pager entry (false hides it). */
+    next?: string | false
+    /** ISO timestamp of the last meaningful change (filled at build). */
+    lastUpdated?: string
     hero?: VirtualHeroConfig
   }
 
@@ -61,12 +67,20 @@ declare module "solidocs:site" {
     link: string
     target?: string
   }
+  interface VirtualThemeEditLink {
+    repo: string
+    dir?: string
+    branch?: string
+    text?: string
+  }
   interface VirtualThemeConfig {
     /** Brand text; `false` hides it (defaults to the site title). */
-    siteTitle?: string | false
+    siteTitle?: string | boolean
     logo?: string
     link?: string
     nav?: VirtualThemeNavLink[]
+    lastUpdated?: boolean | string
+    editLink?: VirtualThemeEditLink
   }
   interface VirtualSiteConfig {
     title: string
