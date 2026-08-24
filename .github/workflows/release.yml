@@ -1,0 +1,79 @@
+name: Release
+
+# Tag-driven npm publishing with trusted publishing (OIDC — no npm
+# token stored in the repo). Tags select the package to release:
+#
+#   solidocs-v1.2.3          -> packages/solidocs
+#   create-solidocs-v0.4.0   -> packages/create-solidocs
+
+on:
+  push:
+    tags:
+      - "solidocs-v*"
+      - "create-solidocs-v*"
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve package from tag
+        id: pkg
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          case "$tag" in
+            solidocs-v*)        dir="packages/solidocs" ;;
+            create-solidocs-v*) dir="packages/create-solidocs" ;;
+            *) echo "::error::Unsupported tag: $tag"; exit 1 ;;
+          esac
+          echo "dir=$dir" >> "$GITHUB_OUTPUT"
+          echo "Releasing $tag from $dir"
+
+      - run: npm install -g corepack@latest && corepack enable pnpm
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: pnpm
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Verify tag matches package version
+        working-directory: ${{ steps.pkg.outputs.dir }}
+        run: |
+          tag="${GITHUB_REF_NAME##*-v}"
+          version=$(node -p "require('./package.json').version")
+          if [ "$tag" != "$version" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} (version $tag) does not match package.json version ($version)."
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        working-directory: ${{ steps.pkg.outputs.dir }}
+        run: pnpm run check
+
+      - name: Build (if the package defines a build script)
+        working-directory: ${{ steps.pkg.outputs.dir }}
+        run: pnpm run --if-present build
+
+      - name: Pack (dry run)
+        working-directory: ${{ steps.pkg.outputs.dir }}
+        run: npm pack --dry-run
+
+      - name: Publish to npm
+        working-directory: ${{ steps.pkg.outputs.dir }}
+        # Trusted publishing authenticates through the id-token above.
+        # create-solidocs is not yet on npm, so its first release needs
+        # new-package provenance; later releases are plain publishes.
+        run: npm publish

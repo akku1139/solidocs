@@ -16,6 +16,10 @@
   ],
   "author": "akku",
   "license": "MIT",
+  "files": [
+    "bin",
+    "src"
+  ],
   "bin": "./bin/solidocs.ts",
   "exports": {
     ".": {
