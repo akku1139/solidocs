@@ -13,6 +13,18 @@ export const ConfigSchema = v.object({
   //   v.pipe(v.string(), v.url()),
   // ]))
   basePath: v.optional(v.string(), "/"), // TODO: support relative base path
+  /// Canonical origin of the deployed site (e.g. "https://example.com").
+  /// Required for sitemap.xml generation.
+  site: v.optional(
+    v.object({
+      url: v.pipe(
+        v.string(),
+        v.regex(/^https?:\/\/[^/]+$/i, "must be an origin like https://example.com (no trailing slash)"),
+      ),
+    }),
+  ),
+  /// Generate a sitemap.xml during build (requires `site.url`).
+  sitemap: v.optional(v.boolean()),
   /// Header customization (VitePress style)
   themeConfig: v.optional(
     v.object({

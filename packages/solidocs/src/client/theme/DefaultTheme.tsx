@@ -42,6 +42,8 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
   const isHome = () => meta()?.frontmatter.layout === "home"
   const hero = () => meta()?.frontmatter.hero
   const siteTitle = () => props.site?.title ?? "Solidocs"
+  // The 404 page prerenders an unknown route, so nothing matches.
+  const isNotFound = () => !meta()
 
   return (
     <PageMetaProvider value={meta}>
@@ -86,10 +88,21 @@ export const DefaultTheme = (props: ParentProps<{ site?: SiteConfig }>) => {
           <div class="solidocs-layout">
             <Sidebar pages={routes} currentPath={currentPath} basePath={props.site?.basePath ?? "/"} />
             <main class="solidocs-content">
-              <article class="solidocs-doc">
-                {props.children}
-                <Pager />
-              </article>
+              <Show
+                when={!isNotFound()}
+                fallback={
+                  <article class="solidocs-doc solidocs-404">
+                    <h1>404</h1>
+                    <p>This page could not be found.</p>
+                    <p><a href={props.site?.basePath ?? "/"}>← Back to the top page</a></p>
+                  </article>
+                }
+              >
+                <article class="solidocs-doc">
+                  {props.children}
+                  <Pager />
+                </article>
+              </Show>
             </main>
             <div class="solidocs-aside">
               <Outline />

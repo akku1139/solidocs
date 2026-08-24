@@ -83,6 +83,24 @@ The default theme ships with light/dark modes. The toggle in the header
 stores the choice in `localStorage`; by default the theme follows the
 visitor's system preference.
 
+## Sitemap & 404
+
+Generate a `sitemap.xml` during the build by setting a canonical
+origin and enabling the sitemap:
+
+```ts
+export default defineConfig({
+  site: {
+    url: "https://example.com", // no trailing slash
+  },
+  sitemap: true,
+})
+```
+
+A `404.html` is always emitted — most static hosts, GitHub Pages
+included, serve it for unknown paths. It renders the regular theme
+shell with a "page not found" message and a link back to the top.
+
 ## Syntax highlighting
 
 Code blocks are highlighted with Shiki using the GitHub light/dark

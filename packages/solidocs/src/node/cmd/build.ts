@@ -91,10 +91,11 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
 
   // Router 1.x matches against the full location (including the base
   // path), so pass base + route as the prerender url.
+  const entryUrl = (config.basePath + clientBaseDir + clientBuildResult.output[0]?.fileName).replaceAll(/\/{2,}/g, "/")
+
   for (const page of pages) {
     console.log("path:", page.path)
     const routeUrl = (config.basePath + page.path).replaceAll(/\/{2,}/g, "/")
-    const entryUrl = (config.basePath + clientBaseDir + clientBuildResult.output[0]?.fileName).replaceAll(/\/{2,}/g, "/")
     const site = {
       title: config.title,
       description: config.description,
@@ -113,7 +114,70 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
     await fs.writeFile(outFile, content)
   }
 
+  // 404.html — most static hosts (GitHub Pages included) serve it for
+  // unknown paths. Render the regular shell around an unknown route.
+  console.log("path: /404.html")
+  const notFoundPage = {
+    path: "/404.html",
+    title: "Page not found",
+    frontmatter: {},
+  }
+  const siteConfig = {
+    title: config.title,
+    description: config.description,
+    lang: config.lang ?? "en",
+    basePath: config.basePath,
+    ...(config.site ? { url: config.site.url } : {}),
+  }
+  const notFoundHtml = await render(
+    (config.basePath + "404").replaceAll(/\/{2,}/g, "/"),
+    entryUrl,
+    config.basePath,
+    notFoundPage,
+    siteConfig,
+  )
+  await fs.writeFile(
+    path.resolve(distDir, "404.html"),
+    "<!DOCTYPE html>" + notFoundHtml.replace(
+      "</head>",
+      themeInitScript + themeStyleTag + "</head>",
+    ),
+  )
+
+  // sitemap.xml — requires the canonical origin (`site.url`).
+  if(config.sitemap && !config.site?.url) {
+    console.warn("sitemap: true needs site.url — skipping sitemap.xml")
+  }
+  if(config.sitemap && config.site?.url) {
+    console.log("path: /sitemap.xml")
+    const origin = config.site.url
+    const entries = pages.map(page =>
+      [
+        "  <url>",
+        `    <loc>${escapeXml(encodeURI(origin + config.basePath.replace(/\/+$/, "") + page.path))}</loc>`,
+        "  </url>",
+      ].join("\n"),
+    )
+    const sitemap = [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+      ...entries,
+      "</urlset>",
+      "",
+    ].join("\n")
+    await fs.writeFile(path.resolve(distDir, "sitemap.xml"), sitemap)
+  }
+
   console.log("done.")
 
   return true
 }
+
+/** Escape a value for use inside an XML text node. */
+const escapeXml = (value: string) =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;")

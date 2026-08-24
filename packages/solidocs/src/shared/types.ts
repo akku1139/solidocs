@@ -116,6 +116,8 @@ export interface SiteConfig {
   description?: string
   lang: string
   basePath: string
+  /** Canonical origin of the deployed site (from the `site` config). */
+  url?: string
   themeConfig?: ThemeConfig
 }
 

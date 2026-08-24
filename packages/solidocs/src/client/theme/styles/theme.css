@@ -557,3 +557,14 @@ img { max-width: 100%; }
   :root:not([data-theme]) .solidocs-theme-toggle-sun { display: none; }
   :root:not([data-theme]) .solidocs-theme-toggle-moon { display: inline; }
 }
+
+/* 404 */
+.solidocs-404 { text-align: center; padding: 64px 0; }
+.solidocs-404 h1 {
+  font-size: clamp(4rem, 12vw, 6rem);
+  margin: 0;
+  background: linear-gradient(120deg, var(--sd-brand), #9b59f5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
