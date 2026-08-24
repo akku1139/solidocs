@@ -7,7 +7,9 @@
     "check": "echo done",
     "check:shared": "cd src/shared && tsc --noEmit",
     "check:client": "cd src/client && tsc --noEmit",
-    "check:node": "cd src/node && tsc --noEmit"
+    "check:node": "cd src/node && tsc --noEmit",
+    "build": "tsc src/node/cli.ts src/node/index.ts --outDir dist --module nodenext --moduleResolution nodenext --target esnext --allowImportingTsExtensions false --rewriteRelativeImportExtensions --erasableSyntaxOnly --skipLibCheck --noEmit false",
+    "prepublishOnly": "pnpm run build"
   },
   "keywords": [
     "solidjs",
@@ -26,12 +28,14 @@
   },
   "files": [
     "bin",
+    "dist",
     "src"
   ],
-  "bin": "./bin/solidocs.ts",
+  "bin": "./bin/solidocs.mjs",
   "exports": {
     ".": {
-      "import": "./src/node/index.ts"
+      "types": "./src/shared/types.ts",
+      "default": "./dist/node/index.js"
     }
   },
   "dependencies": {
@@ -49,6 +53,9 @@
   "devDependencies": {
     "@solidocs-dev/tsconfig": "workspace:*",
     "@types/node": "^26.2.0",
+    "esbuild": "^0.28.2",
     "typescript": "^5.8.3"
-  }
+  },
+  "main": "dist/node/index.js",
+  "types": "src/shared/types.ts"
 }

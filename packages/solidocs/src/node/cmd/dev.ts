@@ -4,7 +4,7 @@ import { watch } from "rolldown"
 import * as path from "node:path"
 import { getPages } from "../rolldown-plugins/routing.ts"
 import { baseRolldownPlugns } from "../utils/rolldown.ts"
-import { p } from "../utils/path.ts"
+import { p, pkgPath } from "../utils/path.ts"
 import { Hono } from "hono"
 import { streamSSE } from "hono/streaming"
 import { serve } from "@hono/node-server"
@@ -24,7 +24,7 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
   let reloadListeners: Array<() => void> = []
 
   const watcher = watch({
-    input: path.resolve(import.meta.dirname, "../../client/entry/dev.tsx"),
+    input: pkgPath("src/client/entry/dev.tsx"),
     platform: "browser",
     treeshake: false,
     plugins: baseRolldownPlugns({
@@ -56,11 +56,11 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
   }))
 
   // Rolldown no longer emits CSS: serve the theme stylesheet and inject it.
-  const themeCssPath = path.resolve(import.meta.dirname, "../../client/theme/styles/theme.css")
+  const themeCssPath = pkgPath("src/client/theme/styles/theme.css")
   const serveThemeCss = async () => fs.readFile(themeCssPath, "utf8")
 
   const devHtml = (
-    await fs.readFile(path.resolve(import.meta.dirname, "../../client/entry/dev.html"))
+    await fs.readFile(pkgPath("src/client/entry/dev.html"))
   ).toString().replace(
     "</head>",
     `<script>try{var t=localStorage.getItem("solidocs-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>

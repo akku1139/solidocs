@@ -3,7 +3,7 @@ import type { ParseArgsOptionsConfig } from "node:util"
 import { build as rolldownBuild } from "rolldown"
 import { getPages } from "../rolldown-plugins/routing.ts"
 import { baseRolldownPlugns } from "../utils/rolldown.ts"
-import { p } from "../utils/path.ts"
+import { p, pkgPath } from "../utils/path.ts"
 import * as path from "node:path"
 import type { AppRender } from "../../shared/types.ts"
 import * as process from "node:process"
@@ -28,7 +28,7 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
   console.log("build for client")
   const skipClient = process.env.SOLIDOC_SKIP_CLIENT === "1"
   const clientBuildResult = skipClient ? { output: [{ fileName: "client.js" }] } : await rolldownBuild({
-    input: path.resolve(import.meta.dirname, "../../client/entry/client.tsx"),
+    input: pkgPath("src/client/entry/client.tsx"),
     output: {
       dir: path.resolve(distDir + clientBaseDir),
       format: "esm",
@@ -51,7 +51,7 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
   console.log("build for prerendering")
   const ssrEntryFile = p("node_modules/.solidocs/ssr-build.js")
   if(process.env.SOLIDOC_SKIP_SSR !== "1") await rolldownBuild({
-    input: path.resolve(import.meta.dirname, "../../client/entry/ssr.tsx"),
+    input: pkgPath("src/client/entry/ssr.tsx"),
     output: {
       file: ssrEntryFile,
       format: "esm",
@@ -81,7 +81,7 @@ export const cmd: CMD<typeof argsSchema> = async (config, _args) => {
   // Rolldown >= 1.2 no longer bundles CSS, so inline the default theme
   // stylesheet directly into every page.
   const themeCss = await fs.readFile(
-    path.resolve(import.meta.dirname, "../../client/theme/styles/theme.css"),
+    pkgPath("src/client/theme/styles/theme.css"),
     "utf8",
   )
   const themeStyleTag = `<style>${themeCss}</style>`
