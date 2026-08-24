@@ -1,9 +1,19 @@
 {
   "name": "create-solidocs",
   "version": "0.0.0",
-  "description": "",
+  "description": "Scaffold a Solidocs site",
   "type": "module",
-  "keywords": [],
+  "keywords": [
+    "solidjs",
+    "rolldown",
+    "solidocs",
+    "static-site-generator"
+  ],
   "author": "akku",
-  "license": "MIT"
+  "license": "MIT",
+  "bin": "./bin/create-solidocs.ts",
+  "files": [
+    "bin",
+    "src"
+  ]
 }

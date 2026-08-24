@@ -13,18 +13,24 @@ This guide walks you through setting up a Solidocs site from scratch.
 - Node.js 24 or later
 - pnpm 10
 
-## Installation
+## Quick start
 
-Install the package:
+Scaffold a complete site with `create-solidocs`:
 
 ```bash
-pnpm add solidocs
+npm create solidocs@latest my-site
+cd my-site
+npm run dev
 ```
 
-You will also need `solid-js` in your project:
+Options: `--title`, `--description`, `--base-path </path/>`, `--force`.
+
+## Manual installation
+
+Prefer setting things up by hand? Install the packages:
 
 ```bash
-pnpm add solid-js
+pnpm add solidocs solid-js @solidjs/router
 ```
 
 ## Project structure
