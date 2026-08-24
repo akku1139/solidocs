@@ -9,6 +9,7 @@ import { mdxDomExpressionsPlugin } from "../rolldown-plugins/mdx-dom-expressions
 import { stripFrontmatterPlugin } from "../rolldown-plugins/strip-frontmatter.ts"
 import { headingSlugPlugin } from "../rolldown-plugins/heading-slugs.ts"
 import rehypeShiki from "@shikijs/rehype"
+import remarkGfm from "remark-gfm"
 
 /**
  * Dual-theme syntax highlighting: generated markup carries CSS
@@ -40,6 +41,7 @@ export const baseRolldownPlugns = (options: {
     mdx({
       jsx: true,
       jsxImportSource: "solid-js",
+      remarkPlugins: [remarkGfm],
       rehypePlugins: [[rehypeShiki, shikiOptions]],
     }),
     mdxDomExpressionsPlugin,

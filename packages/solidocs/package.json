@@ -45,6 +45,7 @@
     "@solidjs/router": "^1.0.0",
     "github-slugger": "^2.0.0",
     "hono": "^4.13.3",
+    "remark-gfm": "^4.0.1",
     "rolldown": "1.2.5",
     "solid-js": "^1.9.15",
     "valibot": "^1.4.2",

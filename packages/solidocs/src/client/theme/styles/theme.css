@@ -229,7 +229,11 @@ img { max-width: 100%; }
 /* Content */
 .solidocs-content { min-width: 0; }
 .solidocs-doc { line-height: 1.75; }
-.solidocs-doc h1, .solidocs-doc h2, .solidocs-doc h3 { scroll-margin-top: calc(var(--sd-header-h) + 16px); }
+/* All headings clear the sticky header when jumped to. */
+.solidocs-doc h1, .solidocs-doc h2, .solidocs-doc h3, .solidocs-doc h4,
+.solidocs-doc h5, .solidocs-doc h6 {
+  scroll-margin-top: calc(var(--sd-header-h) + 16px);
+}
 .solidocs-doc h2 { margin-top: 2.2em; border-bottom: 1px solid var(--sd-border); padding-bottom: .3em; }
 
 /* Aside outline */
