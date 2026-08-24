@@ -1,6 +1,6 @@
 {
   "name": "create-solidocs",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "Scaffold a Solidocs site",
   "type": "module",
   "keywords": [
@@ -11,9 +11,9 @@
   ],
   "author": "akku",
   "license": "MIT",
-  "bin": "./bin/create-solidocs.ts",
+  "bin": "./dist/cli.mjs",
   "files": [
-    "bin",
-    "src"
+    "dist",
+    "README.md"
   ]
 }
