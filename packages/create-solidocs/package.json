@@ -23,5 +23,12 @@
   "files": [
     "dist",
     "README.md"
-  ]
+  ],
+  "scripts": {
+    "build": "esbuild src/cli.ts --bundle --platform=node --format=esm --outfile=dist/cli.mjs '--banner:js=#!/usr/bin/env node' '--footer:js=create(process.argv.slice(2));'",
+    "prepublishOnly": "pnpm run build"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
 }
