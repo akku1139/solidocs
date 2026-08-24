@@ -23,11 +23,12 @@ hero:
       title: Zero config
       details: One command scaffolds, builds and prerenders your whole site.
 ---
-
-## Quick start
-
-Create a new project and install solidocs:
+## Ready to build?
 
 ```bash
-pnpm add solidocs
+npm create solidocs@latest my-site
+cd my-site && npm run dev
 ```
+
+Every `.md` file in your project becomes a page — markdown in,
+static docs out.

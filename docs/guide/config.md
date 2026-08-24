@@ -1,6 +1,6 @@
 ---
 title: Configuration
-order: 2
+order: 20
 description: All configuration options for Solidocs
 ---
 
@@ -39,6 +39,28 @@ export default defineConfig({
 ```
 
 All routes and assets are prefixed with this path.
+
+## themeConfig (header customization)
+
+Customize the header — brand, logo and navigation links:
+
+```ts
+export default defineConfig({
+  title: "Solidocs",
+  themeConfig: {
+    logo: "/img/logo.svg",      // brand image
+    siteTitle: "My Docs",       // brand text; `false` hides it
+    link: "/",                  // where the brand links to
+    nav: [
+      { text: "Guide", link: "/guide/getting-started/" },
+      { text: "GitHub", link: "https://github.com/…" },
+    ],
+  },
+})
+```
+
+Site-relative nav links are resolved against the base path. External
+links open in a new tab unless you pass an explicit `target`.
 
 ## Frontmatter
 
@@ -82,6 +104,10 @@ pages without `order` follow alphabetically after the ordered ones.
 ```yaml
 ---
 title: Configuration
-order: 2
+order: 20
 ---
 ```
+
+Tip: number pages in steps of 10 (10, 20, 30…). Inserting a new page
+between two others then only needs an unused value — say `15` — instead
+of renumbering everything. Fractional values (`12.5`) work too.

@@ -1,17 +1,18 @@
 ---
 title: Getting Started
-order: 1
+order: 10
 description: Set up your first Solidocs site
 ---
 
 # Getting Started
 
-This guide walks you through setting up a Solidocs site from scratch.
+Solidocs is a static site generator powered by SolidJS and Rolldown.
+Write markdown (or MDX), get a fully prerendered documentation site.
 
 ## Requirements
 
 - Node.js 24 or later
-- pnpm 10
+- A package manager — npm, pnpm or yarn
 
 ## Quick start
 
@@ -23,7 +24,16 @@ cd my-site
 npm run dev
 ```
 
-Options: `--title`, `--description`, `--base-path </path/>`, `--force`.
+The dev server starts on `http://localhost:3000` with live reload.
+
+Options:
+
+| Option | Description |
+| --- | --- |
+| `--title <text>` | Site title |
+| `--description <text>` | Site description |
+| `--base-path </path/>` | Deploy under a sub path |
+| `--force` | Write into a non-empty directory |
 
 ## Manual installation
 
@@ -39,17 +49,14 @@ A minimal Solidocs site looks like this:
 
 ```
 my-site/
-├── solidocs.config.ts
+├── solidocs.config.ts     # site configuration
 ├── package.json
-└── docs/
-    ├── index.md
+└── docs/                  # every .md file becomes a page
+    ├── index.md           # → /
     └── guide/
         ├── getting-started.md
         └── config.md
 ```
-
-Every `.md` file becomes a page. `guide/getting-started.md` is served at
-`/guide/getting-started.html`.
 
 ## Configuration
 
@@ -65,26 +72,24 @@ export default defineConfig({
 })
 ```
 
-See the [configuration guide](./config.html) for all options.
+See the [configuration guide](./config.html) for all options,
+including header customization via `themeConfig`.
 
-## Development
-
-Start the dev server with live reload:
-
-```bash
-pnpm docs:dev
-```
-
-## Build
-
-Generate the static site into `.solidocs/dist`:
+## Development & build
 
 ```bash
-pnpm docs:build
+# Dev server with live reload
+pnpm run dev
+
+# Static build into .solidocs/dist
+pnpm run build
 ```
 
-The output is fully static — deploy it to any static host or GitHub Pages.
+The output is fully static — deploy it to any static host. See
+[deployment](./deploy.html) for GitHub Pages specifics.
 
 ## Next steps
 
-- Configure your site via [configuration](./config.html)
+- [Configuration](./config.html) — all config and frontmatter options
+- [MDX](./mdx.html) — components inside markdown
+- [Deployment](./deploy.html) — publish your site
