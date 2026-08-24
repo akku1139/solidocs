@@ -1,4 +1,4 @@
-import type { ParsedConfig } from "./utils/config"
+import type { ParsedConfig } from "./utils/config.ts"
 import type { ParseArgsOptionsConfig, parseArgs } from "node:util"
 
 /**
