@@ -61,7 +61,7 @@ jobs:
 
       - name: Type check
         working-directory: ${{ steps.pkg.outputs.dir }}
-        run: pnpm run check
+        run: pnpm run --if-present check
 
       - name: Build (if the package defines a build script)
         working-directory: ${{ steps.pkg.outputs.dir }}
