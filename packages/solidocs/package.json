@@ -16,6 +16,14 @@
   ],
   "author": "akku",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akku1139/solidocs.git"
+  },
+  "homepage": "https://github.com/akku1139/solidocs#readme",
+  "bugs": {
+    "url": "https://github.com/akku1139/solidocs/issues"
+  },
   "files": [
     "bin",
     "src"

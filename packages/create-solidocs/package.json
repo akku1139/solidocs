@@ -1,6 +1,6 @@
 {
   "name": "create-solidocs",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Scaffold a Solidocs site",
   "type": "module",
   "keywords": [
@@ -11,6 +11,14 @@
   ],
   "author": "akku",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akku1139/solidocs.git"
+  },
+  "homepage": "https://github.com/akku1139/solidocs#readme",
+  "bugs": {
+    "url": "https://github.com/akku1139/solidocs/issues"
+  },
   "bin": "./dist/cli.mjs",
   "files": [
     "dist",
